@@ -65,11 +65,11 @@ R1(config-if)# no shutdown
 
 Explanation:
 
-| Command | Meaning |
-|------|------|
-| interface g0/0 | Select the port |
-| ip address | Assign IP address |
-| no shutdown | Turn the port ON |
+| Command        | Meaning           |
+| -------------- | ----------------- |
+| interface g0/0 | Select the port   |
+| ip address     | Assign IP address |
+| no shutdown    | Turn the port ON  |
 
 Important:
 
