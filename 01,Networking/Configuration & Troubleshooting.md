@@ -225,12 +225,12 @@ Shows the **path packets take to reach the destination**.
 
 # 7. Common Network Problems
 
-| Problem | Cause | Fix |
-|------|------|------|
-| Ping fails | Interface disabled | `no shutdown` |
-| Ping fails | Wrong IP address | Check device IP |
-| Cannot reach internet | Missing gateway | Configure default gateway |
-| Cannot reach other network | Missing route | Add static route |
+| Problem                    | Cause              | Fix                       |
+| -------------------------- | ------------------ | ------------------------- |
+| Ping fails                 | Interface disabled | `no shutdown`             |
+| Ping fails                 | Wrong IP address   | Check device IP           |
+| Cannot reach internet      | Missing gateway    | Configure default gateway |
+| Cannot reach other network | Missing route      | Add static route          |
 
 ---
 
