@@ -1,26 +1,49 @@
 
-
 ---
 
-# 1. Basic Router Configuration
+# 1. Cisco CLI Modes
 
-## Access Router CLI
+Cisco devices have different modes for security and control.
 
+| Mode | Prompt | Purpose | Command |
+|-----|-----|-----|-----|
+| User Mode | `Router>` | Basic view only | Default |
+| Privileged Mode | `Router#` | Admin access | `enable` |
+| Global Config | `(config)#` | Change device settings | `configure terminal` |
+
+### Example
 ```
 Router> enable
 Router# configure terminal
 Router(config)#
 ```
 
+**Simple meaning**
+
+- `>` → normal user
+- `#` → admin
+- `(config)#` → editing device settings
+
 ---
 
-## Set Hostname
+# 2. Basic Router Configuration
+
+## Step 1 — Enter Configuration Mode
+
+```
+Router> enable
+Router# configure terminal
+```
+
+---
+
+## Step 2 — Set Router Name
 
 ```
 Router(config)# hostname R1
 ```
 
-Result:
+Now router prompt becomes:
 
 ```
 R1(config)#
@@ -28,9 +51,11 @@ R1(config)#
 
 ---
 
-## Configure Interface IP Address
+## Step 3 — Configure an Interface
 
-Example:
+Routers communicate through **interfaces (ports)**.
+
+Example configuration:
 
 ```
 R1(config)# interface gigabitEthernet0/0
@@ -40,50 +65,33 @@ R1(config-if)# no shutdown
 
 Explanation:
 
-```
-interface → select port
-ip address → assign IP
-no shutdown → enable interface
-```
+| Command | Meaning |
+|------|------|
+| interface g0/0 | Select the port |
+| ip address | Assign IP address |
+| no shutdown | Turn the port ON |
+
+Important:
+
+Cisco interfaces are **off by default**.
+
+Without `no shutdown` the interface will stay **disabled**.
 
 ---
 
-## Check Interface Status
+# 3. Basic Switch Configuration
 
-```
-show ip interface brief
-```
-
-Example output:
-
-```
-Interface        IP Address     Status
-Gig0/0           192.168.1.1    up
-Gig0/1           unassigned     down
-```
-
----
-
-# 2. Basic Switch Configuration
-
-Enter configuration mode:
+Switches work automatically but need an **IP for management**.
 
 ```
 Switch> enable
 Switch# configure terminal
-```
-
----
-
-## Set Hostname
-
-```
 Switch(config)# hostname S1
 ```
 
 ---
 
-## Assign IP to Switch (Management)
+## Assign Management IP
 
 ```
 S1(config)# interface vlan 1
@@ -91,19 +99,33 @@ S1(config-if)# ip address 192.168.1.2 255.255.255.0
 S1(config-if)# no shutdown
 ```
 
-Default gateway:
+---
+
+## Set Default Gateway
 
 ```
 S1(config)# ip default-gateway 192.168.1.1
 ```
 
+Explanation:
+
+The switch will send traffic for other networks to the router.
+
 ---
 
-# 3. Configure Static Route
+# 4. Static Routing
 
-Static route tells router **how to reach remote network**.
+Routers only know **directly connected networks**.
 
-Example:
+To reach another network, we must create a **static route**.
+
+### Syntax
+
+```
+ip route DESTINATION_NETWORK SUBNET_MASK NEXT_HOP
+```
+
+### Example
 
 ```
 R1(config)# ip route 10.0.0.0 255.255.255.0 192.168.1.2
@@ -112,47 +134,50 @@ R1(config)# ip route 10.0.0.0 255.255.255.0 192.168.1.2
 Meaning:
 
 ```
-Destination network → 10.0.0.0
-Next hop → 192.168.1.2
+To reach network 10.0.0.0
+send packets to router 192.168.1.2
 ```
 
 ---
 
-# 4. Configure Default Route
+# 5. Default Route
 
-Used for **unknown networks (internet)**.
+Default route is used for **unknown networks (usually internet)**.
 
 ```
 R1(config)# ip route 0.0.0.0 0.0.0.0 192.168.1.1
 ```
 
----
-
-# 5. Verify Routing Table
+Meaning:
 
 ```
-show ip route
+If router doesn't know where to send traffic
+send it to 192.168.1.1
 ```
 
-Example:
-
-```
-C 192.168.1.0/24 directly connected
-S 10.0.0.0/24 via 192.168.1.2
-S* 0.0.0.0/0 via 192.168.1.1
-```
+Usually this is the **ISP router**.
 
 ---
 
-# 6. Troubleshooting Commands
+# 6. Important Troubleshooting Commands
 
-These commands are **very important in CCNA and interviews**.
+These commands help find network problems.
+
+---
 
 ## Check Interface Status
 
 ```
 show ip interface brief
 ```
+
+Common results:
+
+| Status | Meaning |
+|------|------|
+| up/up | Working |
+| administratively down | Interface disabled |
+| down/down | Cable problem |
 
 ---
 
@@ -162,33 +187,29 @@ show ip interface brief
 show ip route
 ```
 
----
+Important codes:
 
-## Check MAC Address Table
-
-```
-show mac address-table
-```
-
----
-
-## Check ARP Table
-
-```
-show arp
-```
+| Code | Meaning |
+|----|----|
+| C | Connected |
+| S | Static route |
+| O | OSPF route |
 
 ---
 
-## Test Connectivity
+## Check Connectivity
 
 ### Ping
 
 ```
-ping 192.168.1.10
+ping 192.168.1.1
 ```
 
-Used to check if a device is reachable.
+Meaning:
+
+```
+"Are you reachable?"
+```
 
 ---
 
@@ -198,156 +219,66 @@ Used to check if a device is reachable.
 traceroute 8.8.8.8
 ```
 
-Shows **path packets take to destination**.
+Shows the **path packets take to reach the destination**.
 
 ---
 
 # 7. Common Network Problems
 
-## 1. Interface Shutdown
+| Problem | Cause | Fix |
+|------|------|------|
+| Ping fails | Interface disabled | `no shutdown` |
+| Ping fails | Wrong IP address | Check device IP |
+| Cannot reach internet | Missing gateway | Configure default gateway |
+| Cannot reach other network | Missing route | Add static route |
 
-Problem:
+---
+
+# 8. Save Configuration
+
+If you reboot without saving, configuration is lost.
+
+Save it using:
 
 ```
-Interface down
+copy running-config startup-config
 ```
 
-Fix:
+OR
 
 ```
+write memory
+```
+
+Meaning:
+
+```
+running-config → current settings
+startup-config → saved settings used after reboot
+```
+
+---
+
+# Quick Command Summary
+
+```
+enable
+configure terminal
+hostname
+interface
+ip address
 no shutdown
-```
-
----
-
-## 2. Wrong IP Address
-
-Example:
-
-```
-PC → 192.168.1.10
-Router → 192.168.2.1
-```
-
-Different networks → communication fails.
-
----
-
-## 3. Wrong Subnet Mask
-
-Incorrect mask may cause routing problems.
-
-Example:
-
-```
-255.255.255.0 vs 255.255.0.0
-```
-
----
-
-## 4. Missing Default Gateway
-
-Without gateway, device **cannot reach other networks**.
-
----
-
-## 5. VLAN Misconfiguration
-
-Devices in different VLANs cannot communicate without routing.
-
----
-
-# 8. Basic Troubleshooting Method
-
-Network engineers usually follow this process:
-
-```
-1. Identify the problem
-2. Gather information
-3. Check physical connections
-4. Check IP configuration
-5. Test connectivity (ping)
-6. Check routing table
-7. Fix configuration
-```
-
----
-
-# 9. Important Interview Questions
-
-## Q1. How do you check interface status?
-
-Answer:
-
-```
-show ip interface brief
-```
-
----
-
-## Q2. How do you check routing table?
-
-```
-show ip route
-```
-
----
-
-## Q3. How do you test connectivity between devices?
-
-```
-ping
-```
-
----
-
-## Q4. What command shows MAC address table?
-
-```
-show mac address-table
-```
-
----
-
-## Q5. What command enables a router interface?
-
-```
-no shutdown
-```
-
----
-
-## Q6. What command shows ARP entries?
-
-```
-show arp
-```
-
----
-
-## Q7. What is the difference between ping and traceroute?
-
-Ping → tests connectivity  
-Traceroute → shows the path packets take
-
----
-
-# Quick Revision Commands
-
-```
+ip route
 show ip interface brief
 show ip route
-show arp
-show mac address-table
 ping
 traceroute
+copy running-config startup-config
 ```
 
 ---
 
 # One Line Summary
 
-```
-Configuration → setting up router/switch
-Troubleshooting → finding and fixing network problems
-```
+Router configuration = Assign IP + Enable interface + Add routes  
+Troubleshooting = Use show commands + ping + traceroute
