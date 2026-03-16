@@ -31,7 +31,7 @@ DHCP (Dynamic Host Configuration Protocol) is a protocol that automatically assi
 ```
 
 # DHCP DORA Process 
-###  DISCOVER -- OFFER -- REQUEST -- ACK
+### DISCOVER -- OFFER -- REQUEST -- ACK
 
 ---
 
@@ -477,10 +477,6 @@ DHCP Server (Router)
 ```
 
 ---
-
-> 📝 **Author:** Network Notes
-> 📅 **Last Updated:** 2025
-
 ### Summary
 ```
 ┌────────────────────────────────────────────────────────────────────────────┐
