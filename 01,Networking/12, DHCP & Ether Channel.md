@@ -30,211 +30,456 @@ DHCP (Dynamic Host Configuration Protocol) is a protocol that automatically assi
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-## DORA (Discover → Offer → Request → Acknowledge)
+# DHCP DORA Process 
+###  DISCOVER -- OFFER -- REQUEST -- ACK
 
-## DORA Process in VLAN
+---
 
-**PC-A (VLAN 10) requests IP from DHCP Server**
-```
-INITIAL STATE:
-═════════════
-
-PC-A (VLAN 10)
-┌────────────────────────────┐
-│ IP Address    : 0.0.0.0    │
-│ MAC Address   : AA:AA:AA:AA│
-│ Gateway       : None       │
-│ VLAN          : 10         │
-└────────────────────────────┘
-
-Router Sub-interfaces:
-┌────────────────────────────┐
-│ Fa0/1.10 : 192.168.10.1    │ ← VLAN 10 Gateway
-│            ip helper: 192.168.100.10
-│                            │
-│ Fa0/1.20 : 192.168.20.1    │ ← VLAN 20 Gateway
-│            ip helper: 192.168.100.10
-└────────────────────────────┘
-
-DHCP Server:
-┌────────────────────────────┐
-│ IP: 192.168.100.10         │
-│                            │
-│ Pool VLAN10:               │
-│   Network: 192.168.10.0/24 │
-│   Range: .10 - .100        │
-│   Gateway: 192.168.10.1    │
-│                            │
-│ Pool VLAN20:               │
-│   Network: 192.168.20.0/24 │
-│   Range: .10 - .100        │
-│   Gateway: 192.168.20.1    │
-└────────────────────────────┘
-```
+## Initial State
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                                                                 │
-│   PC-A ◄────► SWITCH ◄────► ROUTER ◄────► DHCP SERVER          │
-│  (VLAN 10)            (Relay Agent)      (192.168.100.10)      │
-│  No IP yet            192.168.10.1                              │
-│                       (ip helper-address 192.168.100.10)        │
-│                                                                 │
-└─────────────────────────────────────────────────────────────────┘
+PC-A
+┌────────────────────────────────┐
+│ IP Address    : 0.0.0.0        │
+│ MAC Address   : AAAA.AAAA      │
+│ Gateway       : None           │
+│ DNS           : None           │
+└────────────────────────────────┘
+
+DHCP Server (Router)
+┌────────────────────────────────┐
+│ IP: 192.168.10.1               │
+│ MAC: BBBB.BBBB                 │
+│                                │
+│ Pool: MYPOOL                   │
+│   Network : 192.168.10.0/24   │
+│   Range   : .10 - .100        │
+│   Gateway : 192.168.10.1      │
+│   DNS     : 8.8.8.8           │
+│   Lease   : 24 hours          │
+│                                │
+│ Excluded  : .1 to .9          │
+└────────────────────────────────┘
 ```
 
+---
+
+## Network Diagram
+
 ```
-┌────────────────────────────────────────────────────────────────────────────┐
-│                          DORA FLOW                                         │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                                                            │
-│    CLIENT                     ROUTER                      SERVER           │
-│   (Port 68)                  (Relay)                    (Port 67)          │
-│      │                          │                           │              │
-│      │ ═══════ DISCOVER ═══════►│ ─────── DISCOVER ────────►│              │
-│      │   Broadcast (68→67)      │   Unicast + GIADDR        │              │
-│      │                          │                           │              │
-│      │ ◄═══════ OFFER ══════════│ ◄─────── OFFER ───────────│              │
-│      │   Broadcast (67→68)      │   Unicast to GIADDR       │              │
-│      │                          │                           │              │
-│      │ ═══════ REQUEST ════════►│ ─────── REQUEST ─────────►│              │
-│      │   Broadcast (68→67)      │   Unicast + GIADDR        │              │
-│      │                          │                           │              │
-│      │ ◄═══════ ACK ════════════│ ◄─────── ACK ─────────────│              │
-│      │   Broadcast (67→68)      │   Unicast to GIADDR       │              │
-│      │                          │                           │              │
-│      ▼                          │                           │              │
-│  GOT IP!                        │                           │              │
-│                                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
-```
-### 1: DISCOVER 
-```
-┌────────────────────────────────────────────────────────────────────────────┐
-│  STEP 1: DISCOVER - "I need an IP!"                                        │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                                                            │
-│  WHO SENDS  : Client (PC-A)                                                │
-│  TYPE       : BROADCAST                                                    │
-│  DIRECTION  : Client → Server                                              │
-│                                                                            │
-│  ┌────────────────────────────────────────────────────────────────────────┐│
-│  │  LAYER 2:  Src MAC: AAAA.AAAA │ Dst MAC: FFFF.FFFF (Broadcast)        ││
-│  │  LAYER 3:  Src IP : 0.0.0.0   │ Dst IP : 255.255.255.255              ││
-│  │  LAYER 4:  Src Port: 68       │ Dst Port: 67                          ││
-│  │  DHCP:     GIADDR: 0.0.0.0    │ Message: DISCOVER                     ││
-│  └────────────────────────────────────────────────────────────────────────┘│
-│                                                                            │
-│  AFTER RELAY:                                                              │
-│  ┌────────────────────────────────────────────────────────────────────────┐│
-│  │  LAYER 3:  Src IP : 192.168.100.1 │ Dst IP : 192.168.100.10 (Unicast) ││
-│  │  LAYER 4:  Src Port: 67           │ Dst Port: 67                      ││
-│  │  DHCP:     GIADDR: 192.168.10.1   │ Client MAC: AAAA.AAAA (preserved) ││
-│  └────────────────────────────────────────────────────────────────────────┘│
-│                                                                            │
-│  KEY: Router adds GIADDR = 192.168.10.1 (tells server which subnet)        │
-│                                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────┐
+│                                                   │
+│   PC-A ◄──────────────► ROUTER (DHCP Server)     │
+│   No IP yet               192.168.10.1            │
+│   0.0.0.0                 Has pool of IPs         │
+│                                                   │
+└───────────────────────────────────────────────────┘
 ```
 
-### 2: OFFER 
+---
+
+## DORA Flow Overview
+
 ```
-┌────────────────────────────────────────────────────────────────────────────┐
-│  STEP 2: OFFER - "Here's 192.168.10.10 for you!"                           │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                                                            │
-│  WHO SENDS  : Server                                                       │
-│  TYPE       : UNICAST (to Router) → BROADCAST (to Client)                  │
-│  DIRECTION  : Server → Client                                              │
-│                                                                            │
-│  SERVER LOGIC:                                                             │
-│  ┌────────────────────────────────────────────────────────────────────────┐│
-│  │  "GIADDR = 192.168.10.1 → Client is in 192.168.10.0/24 network"       ││
-│  │  "Use VLAN10 pool → Assign 192.168.10.10"                             ││
-│  └────────────────────────────────────────────────────────────────────────┘│
-│                                                                            │
-│  PACKET:                                                                   │
-│  ┌────────────────────────────────────────────────────────────────────────┐│
-│  │  LAYER 3:  Src IP : 192.168.100.10  │ Dst IP : 192.168.10.1 (GIADDR)  ││
-│  │  LAYER 4:  Src Port: 67             │ Dst Port: 68                    ││
-│  │  DHCP:     YIADDR: 192.168.10.10    │ Message: OFFER                  ││
-│  │                                                                        ││
-│  │  OPTIONS:  Subnet Mask    : 255.255.255.0                             ││
-│  │            Default Gateway: 192.168.10.1                              ││
-│  │            DNS Server     : 8.8.8.8                                   ││
-│  │            Lease Time     : 86400 sec (24 hours)                      ││
-│  └────────────────────────────────────────────────────────────────────────┘│
-│                                                                            │
-│  KEY: YIADDR = "Your IP Address" = IP offered to client                    │
-│                                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│                        DORA FLOW                             │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│    CLIENT (PC-A)                        SERVER (Router)      │
+│     (Port 68)                            (Port 67)           │
+│        │                                    │                │
+│        │ ═══════ 1. DISCOVER ══════════════►│                │
+│        │    Broadcast (68 → 67)             │                │
+│        │    "Any DHCP server?"              │                │
+│        │                                    │                │
+│        │ ◄══════ 2. OFFER ═════════════════ │                │
+│        │    Broadcast (67 → 68)             │                │
+│        │    "Here's 192.168.10.10"          │                │
+│        │                                    │                │
+│        │ ═══════ 3. REQUEST ═══════════════►│                │
+│        │    Broadcast (68 → 67)             │                │
+│        │    "I want 192.168.10.10"          │                │
+│        │                                    │                │
+│        │ ◄══════ 4. ACK ══════════════════  │                │
+│        │    Broadcast (67 → 68)             │                │
+│        │    "Confirmed! It's yours!"        │                │
+│        │                                    │                │
+│        ▼                                    │                │
+│     GOT IP!                                 │                │
+│     192.168.10.10 ✅                        │                │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-### 3: REQUEST
+---
+
+## Step 1: DISCOVER
+
 ```
-┌────────────────────────────────────────────────────────────────────────────┐
-│  STEP 3: REQUEST - "Yes! I want 192.168.10.10!"                            │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                                                            │
-│  WHO SENDS  : Client (PC-A)                                                │
-│  TYPE       : BROADCAST (informs ALL servers)                              │
-│  DIRECTION  : Client → Server                                              │
-│                                                                            │
-│  PACKET:                                                                   │
-│  ┌────────────────────────────────────────────────────────────────────────┐│
-│  │  LAYER 3:  Src IP : 0.0.0.0   │ Dst IP : 255.255.255.255              ││
-│  │  LAYER 4:  Src Port: 68       │ Dst Port: 67                          ││
-│  │  DHCP:     Requested IP : 192.168.10.10                               ││
-│  │            Server ID    : 192.168.100.10                              ││
-│  │            Message      : REQUEST                                     ││
-│  └────────────────────────────────────────────────────────────────────────┘│
-│                                                                            │
-│  WHY BROADCAST?                                                            │
-│  ┌────────────────────────────────────────────────────────────────────────┐│
-│  │  • Inform chosen server: "I accept your offer"                        ││
-│  │  • Inform other servers: "Release your offers"                        ││
-│  │  • Client STILL has no IP (Src IP = 0.0.0.0)                          ││
-│  └────────────────────────────────────────────────────────────────────────┘│
-│                                                                            │
-│  KEY: Contains Requested IP + Server Identifier                            │
-│                                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│  STEP 1: DISCOVER — "I need an IP!"                          │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│  WHO SENDS  : Client (PC-A)                                  │
+│  TYPE       : BROADCAST                                      │
+│  DIRECTION  : Client → Everyone (looking for server)         │
+│                                                              │
+│  WHY BROADCAST?                                              │
+│  • PC has NO IP address (0.0.0.0)                           │
+│  • PC doesn't know where DHCP server is                     │
+│  • So PC shouts to EVERYONE on network                      │
+│                                                              │
+│  PACKET:                                                     │
+│  ┌──────────────────────────────────────────────────────────┐│
+│  │  LAYER 2:                                                ││
+│  │    Src MAC  : AAAA.AAAA          (my MAC)               ││
+│  │    Dst MAC  : FFFF.FFFF          (broadcast)            ││
+│  │                                                          ││
+│  │  LAYER 3:                                                ││
+│  │    Src IP   : 0.0.0.0            (I have no IP)         ││
+│  │    Dst IP   : 255.255.255.255    (broadcast)            ││
+│  │                                                          ││
+│  │  LAYER 4:                                                ││
+│  │    Src Port : 68                 (DHCP client port)     ││
+│  │    Dst Port : 67                 (DHCP server port)     ││
+│  │                                                          ││
+│  │  DHCP DATA:                                              ││
+│  │    Message Type   : DISCOVER                             ││
+│  │    Transaction ID : 0x1234ABCD   (unique ID)            ││
+│  │    Client MAC     : AAAA.AAAA    (so server knows me)   ││
+│  │    Requested IP   : 0.0.0.0      (no preference)        ││
+│  └──────────────────────────────────────────────────────────┘│
+│                                                              │
+│  WHAT HAPPENS:                                               │
+│  ┌──────────────────────────────────────────────────────────┐│
+│  │                                                          ││
+│  │  PC-A shouts → EVERYONE hears it                        ││
+│  │                                                          ││
+│  │  Other PCs    : "Not for me" (ignore) ❌                ││
+│  │  Printer      : "Not for me" (ignore) ❌                ││
+│  │  DHCP Server  : "That's for ME!" ✅                     ││
+│  │                                                          ││
+│  └──────────────────────────────────────────────────────────┘│
+│                                                              │
+│  DIAGRAM:                                                    │
+│                                                              │
+│  ┌──────┐                              ┌──────────────┐     │
+│  │ PC-A │                              │ DHCP Server  │     │
+│  │      │  ══════ DISCOVER ══════════► │              │     │
+│  │      │  Src: 0.0.0.0               │ 192.168.10.1 │     │
+│  │      │  Dst: 255.255.255.255       │              │     │
+│  │      │  "Any DHCP server here?"    │  "I heard    │     │
+│  └──────┘                              │   that!"     │     │
+│                                        └──────────────┘     │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
 ```
 
-### 4: ACK
+---
+
+## Step 2: OFFER
+
 ```
-┌────────────────────────────────────────────────────────────────────────────┐
-│  STEP 4: ACK - "Confirmed! 192.168.10.10 is yours!"                        │
-├────────────────────────────────────────────────────────────────────────────┤
-│                                                                            │
-│  WHO SENDS  : Server                                                       │
-│  TYPE       : UNICAST (to Router) → BROADCAST (to Client)                  │
-│  DIRECTION  : Server → Client                                              │
-│                                                                            │
-│  PACKET:                                                                   │
-│  ┌────────────────────────────────────────────────────────────────────────┐│
-│  │  LAYER 3:  Src IP : 192.168.100.10  │ Dst IP : 192.168.10.1 (GIADDR)  ││
-│  │  LAYER 4:  Src Port: 67             │ Dst Port: 68                    ││
-│  │  DHCP:     YIADDR: 192.168.10.10    │ Message: ACK                    ││
-│  │                                                                        ││
-│  │  OPTIONS:  Subnet Mask    : 255.255.255.0                             ││
-│  │            Default Gateway: 192.168.10.1                              ││
-│  │            DNS Server     : 8.8.8.8                                   ││
-│  │            Lease Time     : 86400 sec                                 ││
-│  └────────────────────────────────────────────────────────────────────────┘│
-│                                                                            │
-│  RESULT - PC-A CONFIGURED:                                                 │
-│  ┌────────────────────────────────────────────────────────────────────────┐│
-│  │  IP Address     : 192.168.10.10                                       ││
-│  │  Subnet Mask    : 255.255.255.0                                       ││
-│  │  Default Gateway: 192.168.10.1                                        ││
-│  │  DNS Server     : 8.8.8.8                                             ││
-│  └────────────────────────────────────────────────────────────────────────┘│
-│                                                                            │
-│  KEY: Server records binding (MAC ↔ IP) in database                        │
-│                                                                            │
-└────────────────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│  STEP 2: OFFER — "Here's 192.168.10.10 for you!"            │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│  WHO SENDS  : DHCP Server                                    │
+│  TYPE       : BROADCAST                                      │
+│  DIRECTION  : Server → Client                                │
+│                                                              │
+│  WHY BROADCAST?                                              │
+│  • Client STILL has no IP (can't receive unicast)           │
+│  • Client identifies its offer by Transaction ID            │
+│                                                              │
+│  SERVER LOGIC:                                               │
+│  ┌──────────────────────────────────────────────────────────┐│
+│  │                                                          ││
+│  │  1. Server receives DISCOVER                            ││
+│  │  2. Server checks pool: "What IPs are available?"       ││
+│  │     → .1 to .9 = EXCLUDED (reserved)                    ││
+│  │     → .10 = AVAILABLE ✅ (first available)              ││
+│  │  3. Server picks 192.168.10.10                          ││
+│  │  4. Server RESERVES this IP temporarily                 ││
+│  │  5. Server sends OFFER with this IP                     ││
+│  │                                                          ││
+│  └──────────────────────────────────────────────────────────┘│
+│                                                              │
+│  PACKET:                                                     │
+│  ┌──────────────────────────────────────────────────────────┐│
+│  │  LAYER 2:                                                ││
+│  │    Src MAC  : BBBB.BBBB          (server's MAC)         ││
+│  │    Dst MAC  : FFFF.FFFF          (broadcast)            ││
+│  │                                                          ││
+│  │  LAYER 3:                                                ││
+│  │    Src IP   : 192.168.10.1       (server's IP)          ││
+│  │    Dst IP   : 255.255.255.255    (broadcast)            ││
+│  │                                                          ││
+│  │  LAYER 4:                                                ││
+│  │    Src Port : 67                 (server port)          ││
+│  │    Dst Port : 68                 (client port)          ││
+│  │                                                          ││
+│  │  DHCP DATA:                                              ││
+│  │    Message Type    : OFFER                               ││
+│  │    Transaction ID  : 0x1234ABCD  (matches DISCOVER)     ││
+│  │    YIADDR          : 192.168.10.10 (Your IP Address)    ││
+│  │    Server ID       : 192.168.10.1                       ││
+│  │                                                          ││
+│  │  OPTIONS:                                                ││
+│  │    Subnet Mask     : 255.255.255.0                      ││
+│  │    Default Gateway : 192.168.10.1                       ││
+│  │    DNS Server      : 8.8.8.8                            ││
+│  │    Lease Time      : 86400 seconds (24 hours)           ││
+│  └──────────────────────────────────────────────────────────┘│
+│                                                              │
+│  WHAT HAPPENS:                                               │
+│  ┌──────────────────────────────────────────────────────────┐│
+│  │                                                          ││
+│  │  Server broadcasts OFFER → EVERYONE hears it            ││
+│  │                                                          ││
+│  │  PC-A checks Transaction ID:                            ││
+│  │  "0x1234ABCD matches MY discover! This is for ME!" ✅   ││
+│  │                                                          ││
+│  │  Other PCs check Transaction ID:                        ││
+│  │  "0x1234ABCD is NOT mine. Ignore." ❌                   ││
+│  │                                                          ││
+│  └──────────────────────────────────────────────────────────┘│
+│                                                              │
+│  DIAGRAM:                                                    │
+│                                                              │
+│  ┌──────┐                              ┌──────────────┐     │
+│  │ PC-A │                              │ DHCP Server  │     │
+│  │      │  ◄══════ OFFER ════════════  │              │     │
+│  │      │  "I offer you .10.10"        │ 192.168.10.1 │     │
+│  │      │  Mask: 255.255.255.0         │              │     │
+│  │      │  GW: 192.168.10.1            │              │     │
+│  │      │  DNS: 8.8.8.8                │              │     │
+│  │      │  Lease: 24 hours             │              │     │
+│  └──────┘                              └──────────────┘     │
+│                                                              │
+│  KEY: YIADDR = "Your IP Address" = the IP offered to client │
+│  KEY: Transaction ID must MATCH the DISCOVER                 │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
 ```
+
+---
+
+## Step 3: REQUEST
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│  STEP 3: REQUEST — "Yes! I want 192.168.10.10!"             │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│  WHO SENDS  : Client (PC-A)                                  │
+│  TYPE       : BROADCAST                                      │
+│  DIRECTION  : Client → Everyone                              │
+│                                                              │
+│  WHY BROADCAST? (3 reasons)                                  │
+│  ┌──────────────────────────────────────────────────────────┐│
+│  │                                                          ││
+│  │  1. Client STILL has no confirmed IP (Src = 0.0.0.0)   ││
+│  │                                                          ││
+│  │  2. Tell chosen server: "I accept YOUR offer" ✅        ││
+│  │                                                          ││
+│  │  3. Tell other servers: "I did NOT choose you,          ││
+│  │     release the IP you offered back to your pool" ❌    ││
+│  │                                                          ││
+│  └──────────────────────────────────────────────────────────┘│
+│                                                              │
+│  PACKET:                                                     │
+│  ┌──────────────────────────────────────────────────────────┐│
+│  │  LAYER 2:                                                ││
+│  │    Src MAC  : AAAA.AAAA          (my MAC)               ││
+│  │    Dst MAC  : FFFF.FFFF          (broadcast)            ││
+│  │                                                          ││
+│  │  LAYER 3:                                                ││
+│  │    Src IP   : 0.0.0.0            (still no confirmed IP)││
+│  │    Dst IP   : 255.255.255.255    (broadcast)            ││
+│  │                                                          ││
+│  │  LAYER 4:                                                ││
+│  │    Src Port : 68                 (client port)          ││
+│  │    Dst Port : 67                 (server port)          ││
+│  │                                                          ││
+│  │  DHCP DATA:                                              ││
+│  │    Message Type   : REQUEST                              ││
+│  │    Transaction ID : 0x1234ABCD   (same as before)       ││
+│  │    Requested IP   : 192.168.10.10 (I want this IP)     ││
+│  │    Server ID      : 192.168.10.1  (I chose THIS server)││
+│  │    Client MAC     : AAAA.AAAA                           ││
+│  └──────────────────────────────────────────────────────────┘│
+│                                                              │
+│  WHAT HAPPENS:                                               │
+│  ┌──────────────────────────────────────────────────────────┐│
+│  │                                                          ││
+│  │  Chosen Server (192.168.10.1):                          ││
+│  │  "Client chose ME! I'll send ACK" ✅                    ││
+│  │                                                          ││
+│  │  Other Servers (if any):                                ││
+│  │  "Client chose someone else."                           ││
+│  │  "I'll release my offered IP back to pool" ❌           ││
+│  │                                                          ││
+│  └──────────────────────────────────────────────────────────┘│
+│                                                              │
+│  DIAGRAM:                                                    │
+│                                                              │
+│  ┌──────┐                              ┌──────────────┐     │
+│  │ PC-A │                              │ DHCP Server  │     │
+│  │      │  ══════ REQUEST ═══════════► │              │     │
+│  │      │  "I want 192.168.10.10"      │ 192.168.10.1 │     │
+│  │      │  "I chose server .10.1"      │              │     │
+│  │      │  Src: 0.0.0.0               │  "Client     │     │
+│  │      │  Dst: 255.255.255.255       │   chose ME!" │     │
+│  └──────┘                              └──────────────┘     │
+│                                                              │
+│  KEY: Contains both Requested IP and Server ID              │
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Step 4: ACK (Acknowledge)
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│  STEP 4: ACK — "Confirmed! 192.168.10.10 is yours!"         │
+├──────────────────────────────────────────────────────────────┤
+│                                                              │
+│  WHO SENDS  : DHCP Server                                    │
+│  TYPE       : BROADCAST                                      │
+│  DIRECTION  : Server → Client                                │
+│                                                              │
+│  SERVER DOES 2 THINGS:                                       │
+│  ┌──────────────────────────────────────────────────────────┐│
+│  │                                                          ││
+│  │  1. Creates BINDING record in database:                 ││
+│  │     MAC: AAAA.AAAA ↔ IP: 192.168.10.10                ││
+│  │     Lease: 24 hours                                     ││
+│  │                                                          ││
+│  │  2. Sends ACK packet to confirm                         ││
+│  │                                                          ││
+│  └──────────────────────────────────────────────────────────┘│
+│                                                              │
+│  PACKET:                                                     │
+│  ┌──────────────────────────────────────────────────────────┐│
+│  │  LAYER 2:                                                ││
+│  │    Src MAC  : BBBB.BBBB          (server's MAC)         ││
+│  │    Dst MAC  : FFFF.FFFF          (broadcast)            ││
+│  │                                                          ││
+│  │  LAYER 3:                                                ││
+│  │    Src IP   : 192.168.10.1       (server's IP)          ││
+│  │    Dst IP   : 255.255.255.255    (broadcast)            ││
+│  │                                                          ││
+│  │  LAYER 4:                                                ││
+│  │    Src Port : 67                 (server port)          ││
+│  │    Dst Port : 68                 (client port)          ││
+│  │                                                          ││
+│  │  DHCP DATA:                                              ││
+│  │    Message Type    : ACK                                 ││
+│  │    Transaction ID  : 0x1234ABCD  (matches everything)   ││
+│  │    YIADDR          : 192.168.10.10 (Your IP confirmed)  ││
+│  │    Server ID       : 192.168.10.1                       ││
+│  │                                                          ││
+│  │  OPTIONS:                                                ││
+│  │    Subnet Mask     : 255.255.255.0                      ││
+│  │    Default Gateway : 192.168.10.1                       ││
+│  │    DNS Server      : 8.8.8.8                            ││
+│  │    Lease Time      : 86400 seconds (24 hours)           ││
+│  └──────────────────────────────────────────────────────────┘│
+│                                                              │
+│  DIAGRAM:                                                    │
+│                                                              │
+│  ┌──────┐                              ┌──────────────┐     │
+│  │ PC-A │                              │ DHCP Server  │     │
+│  │      │  ◄══════ ACK ═══════════════ │              │     │
+│  │      │  "CONFIRMED!"                │ 192.168.10.1 │     │
+│  │      │  ".10.10 is yours            │              │     │
+│  │      │   for 24 hours!"             │  Binding:    │     │
+│  │      │                              │  AAAA↔.10.10 │     │
+│  └──────┘                              └──────────────┘     │
+│                                                              │
+│  RESULT — PC-A IS NOW CONFIGURED:                            │
+│  ┌──────────────────────────────────────────────────────────┐│
+│  │                                                          ││
+│  │  IP Address      : 192.168.10.10    ✅                  ││
+│  │  Subnet Mask     : 255.255.255.0    ✅                  ││
+│  │  Default Gateway : 192.168.10.1     ✅                  ││
+│  │  DNS Server      : 8.8.8.8          ✅                  ││
+│  │  Lease Time      : 24 hours         ✅                  ││
+│  │                                                          ││
+│  │  PC-A can now COMMUNICATE on the network! 🎉           ││
+│  │                                                          ││
+│  └──────────────────────────────────────────────────────────┘│
+│                                                              │
+│  SERVER BINDING TABLE:                                       │
+│  ┌──────────────────────────────────────────────────────────┐│
+│  │  IP Address     │ MAC Address  │ Lease Expires           ││
+│  │  192.168.10.10  │ AAAA.AAAA   │ Tomorrow 10:00 AM      ││
+│  └──────────────────────────────────────────────────────────┘│
+│                                                              │
+└──────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## DORA Summary Table
+
+```
+┌──────────────────────────────────────────────────────────────┐
+│                     DORA SUMMARY                             │
+├──────┬───────────┬────────┬───────────┬─────────────────────┤
+│ Step │ Message   │ Sender │ Type      │ Key Info            │
+├──────┼───────────┼────────┼───────────┼─────────────────────┤
+│  D   │ DISCOVER  │ Client │ Broadcast │ "Any server?"       │
+│      │           │        │           │ Src: 0.0.0.0        │
+│      │           │        │           │ Dst: 255.255.255.255│
+│      │           │        │           │ Port: 68 → 67       │
+├──────┼───────────┼────────┼───────────┼─────────────────────┤
+│  O   │ OFFER     │ Server │ Broadcast │ "Here's .10.10"     │
+│      │           │        │           │ Src: 192.168.10.1   │
+│      │           │        │           │ Dst: 255.255.255.255│
+│      │           │        │           │ Port: 67 → 68       │
+├──────┼───────────┼────────┼───────────┼─────────────────────┤
+│  R   │ REQUEST   │ Client │ Broadcast │ "I want .10.10"     │
+│      │           │        │           │ Src: 0.0.0.0        │
+│      │           │        │           │ Dst: 255.255.255.255│
+│      │           │        │           │ Port: 68 → 67       │
+├──────┼───────────┼────────┼───────────┼─────────────────────┤
+│  A   │ ACK       │ Server │ Broadcast │ "Confirmed!"        │
+│      │           │        │           │ Src: 192.168.10.1   │
+│      │           │        │           │ Dst: 255.255.255.255│
+│      │           │        │           │ Port: 67 → 68       │
+└──────┴───────────┴────────┴───────────┴─────────────────────┘
+```
+
+---
+
+## Before and After DORA
+
+```
+  BEFORE DORA:                        AFTER DORA:
+
+  ┌────────────────────┐              ┌────────────────────┐
+  │ PC-A               │              │ PC-A               │
+  │                    │              │                    │
+  │ IP:   0.0.0.0     │              │ IP:   192.168.10.10│
+  │ Mask: None         │              │ Mask: 255.255.255.0│
+  │ GW:   None         │              │ GW:   192.168.10.1│
+  │ DNS:  None         │              │ DNS:  8.8.8.8     │
+  │                    │              │                    │
+  │ ❌ Cannot          │              │ ✅ Can ping       │
+  │    communicate     │              │ ✅ Can browse     │
+  │                    │              │ ✅ Can access     │
+  │                    │              │    network        │
+  └────────────────────┘              └────────────────────┘
+```
+
+---
+
+> 📝 **Author:** Network Notes
+> 📅 **Last Updated:** 2025
 
 ### Summary
 ```
