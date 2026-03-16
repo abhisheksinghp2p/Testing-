@@ -201,6 +201,330 @@ Device Details:
 └──────┴─────────┴──────────────────┴─────────────────┘
 ```
 
+
+# Access Port vs Trunk Port — Simple Explanation
+
+---
+
+# Access Port 
+
+An **access port connects an end device** such as:
+
+- PC
+- Laptop
+- Printer
+- IP Phone
+
+==An **access port carries traffic for only one VLAN**.==
+
+### Example
+
+PC1 is connected to switch port **Fa0/1**
+
+```
+Fa0/1 → VLAN 10
+```
+
+So **PC1 becomes part of VLAN 10**.
+
+---
+
+# Trunk Port
+
+A **trunk port connects networking devices**, such as:
+
+- Switch ↔ Switch
+- Switch ↔ Router
+- Switch ↔ Server
+
+==A trunk port **carries traffic for multiple VLANs simultaneously**.==
+
+Example trunk traffic:
+
+```
+VLAN 10 traffic
+VLAN 20 traffic
+VLAN 30 traffic
+```
+
+To keep them separated, the switch adds a **VLAN tag (802.1Q)** to frames.
+
+---
+
+# 4. Easy Comparison
+
+| Feature      | Access Port      | Trunk Port         |
+| ------------ | ---------------- | ------------------ |
+| Connects to  | End devices      | Switches / routers |
+| VLANs        | One VLAN         | Multiple VLANs     |
+| VLAN tagging | Usually untagged | Tagged             |
+| Example      | PC, Printer      | Switch link        |
+
+---
+
+# 5. Real Network Example
+
+Two switches:
+
+```
+Switch1
+Switch2
+```
+
+Network design:
+
+```
+Sales → VLAN 10
+HR → VLAN 20
+```
+
+Switch1:
+
+```
+PC1 → Fa0/1 → VLAN 10
+PC2 → Fa0/2 → VLAN 20
+```
+
+Switch2:
+
+```
+PC3 → Fa0/1 → VLAN 10
+PC4 → Fa0/2 → VLAN 20
+```
+
+The link between switches must be a **trunk** so both VLANs can pass.
+
+---
+
+# 6. Network Diagram
+
+```
+PC1 ---- Fa0/1     Switch1     Fa0/24 -------- Fa0/24     Switch2 ---- Fa0/1 ---- PC3
+         VLAN10    [Access]                  [Trunk]                  [Access]    VLAN10
+
+PC2 ---- Fa0/2                                                   Fa0/2 ---- PC4
+         VLAN20                                                   VLAN20
+```
+
+- PC ports → **Access ports**
+- Switch-to-switch link → **Trunk port**
+
+---
+
+# 7. Access Port Configuration
+
+## Create VLANs
+
+```
+Switch(config)# vlan 10
+Switch(config-vlan)# name SALES
+Switch(config-vlan)# exit
+
+Switch(config)# vlan 20
+Switch(config-vlan)# name HR
+Switch(config-vlan)# exit
+```
+
+---
+
+## Configure Fa0/1 for VLAN 10
+
+```
+Switch(config)# interface fastethernet 0/1
+Switch(config-if)# switchport mode access
+Switch(config-if)# switchport access vlan 10
+Switch(config-if)# no shutdown
+Switch(config-if)# exit
+```
+
+---
+
+## Configure Fa0/2 for VLAN 20
+
+```
+Switch(config)# interface fastethernet 0/2
+Switch(config-if)# switchport mode access
+Switch(config-if)# switchport access vlan 20
+Switch(config-if)# no shutdown
+Switch(config-if)# exit
+```
+
+### Meaning
+
+```
+switchport mode access → sets port as access port
+switchport access vlan 10 → assigns VLAN 10 to that port
+```
+
+---
+
+# 8. Trunk Port Configuration
+
+Assume **Fa0/24 connects Switch1 and Switch2**.
+
+```
+Switch(config)# interface fastethernet 0/24
+Switch(config-if)# switchport mode trunk
+Switch(config-if)# switchport trunk allowed vlan 10,20
+Switch(config-if)# no shutdown
+Switch(config-if)# exit
+```
+
+### Meaning
+
+```
+switchport mode trunk → makes port a trunk
+switchport trunk allowed vlan 10,20 → allows VLAN 10 and 20 through the trunk
+```
+
+---
+
+# 9. Traffic Flow
+
+## Access Port Traffic
+
+When PC1 sends data:
+
+```
+PC1 → Fa0/1 → VLAN 10
+```
+
+Switch treats the frame as **VLAN 10 traffic**.
+
+---
+
+## Trunk Port Traffic
+
+When traffic moves between switches:
+
+```
+Switch1 → Fa0/24 → Switch2
+```
+
+The switch adds a **VLAN tag**.
+
+Switch2 reads the tag and forwards to the correct VLAN port.
+
+---
+
+# 10. Important Tagging Concept
+
+```
+Access Port → Frames usually untagged
+Trunk Port → Frames tagged with VLAN ID
+```
+
+Tagging helps switches identify **which VLAN the traffic belongs to**.
+
+---
+
+# 11. Verification Commands
+
+## Check VLANs
+
+```
+Switch# show vlan brief
+```
+
+---
+
+## Check Trunk Ports
+
+```
+Switch# show interfaces trunk
+```
+
+---
+
+## Check Running Configuration
+
+```
+Switch# show running-config
+```
+
+---
+
+# 12. Example Output
+
+### show vlan brief
+
+```
+VLAN Name                             Status    Ports
+10   SALES                            active    Fa0/1
+20   HR                               active    Fa0/2
+```
+
+---
+
+### show interfaces trunk
+
+```
+Port        Mode         Encapsulation  Status        Native vlan
+Fa0/24      on           802.1q         trunking      1
+```
+
+Allowed VLANs:
+
+```
+Port        Vlans allowed on trunk
+Fa0/24      10,20
+```
+
+---
+
+# 13. Memory Trick
+
+```
+Access Port → One VLAN
+Trunk Port → Many VLANs
+```
+
+Or
+
+```
+Access → Device connection
+Trunk → Switch connection
+```
+
+---
+
+# 14. Quick Summary
+
+## Access Port
+
+Used for end devices.
+
+Example:
+
+```
+interface fa0/1
+ switchport mode access
+ switchport access vlan 10
+```
+
+---
+
+## Trunk Port
+
+Used between switches.
+
+Example:
+
+```
+interface fa0/24
+ switchport mode trunk
+ switchport trunk allowed vlan 10,20
+```
+
+---
+
+# Final Simple Sentence
+
+A **PC port is usually an access port**.  
+A **switch-to-switch link is usually a trunk port**.
+
+
+
 ## Access Port vs Trunk Port
 ### Access Port
 ```
