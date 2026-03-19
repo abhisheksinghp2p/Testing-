@@ -387,14 +387,14 @@ sudo cat /etc/shadow
 john:$6$xyz...abc:19000:0:99999:7:::
 ```
 
-| Field | Meaning |
-| :--- | :--- |
-| `john` | Username |
-| `$6$xyz...` | Encrypted password |
-| `19000` | Days since Jan 1, 1970 (Last changed) |
-| `0` | Min days before password change allowed |
-| `99999` | Max days password is valid |
-| `7` | Warning days before expiration 
+| Field       | Meaning                                 |
+| :---------- | :-------------------------------------- |
+| `john`      | Username                                |
+| `$6$xyz...` | Encrypted password                      |
+| `19000`     | Days since Jan 1, 1970 (Last changed)   |
+| `0`         | Min days before password change allowed |
+| `99999`     | Max days password is valid              |
+| `7`         | Warning days before expiration          |
 
 ### Password Hash Types
 The password hash starts with a prefix:
