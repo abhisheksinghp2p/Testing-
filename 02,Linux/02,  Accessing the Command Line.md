@@ -137,13 +137,13 @@ cd ../..    # Go up two directories
 | `users` | List logged in users   | Quick user check     |
 #### Command History
 
-| Action | Method |
-| :--- | :--- |
-| View history | `history` |
-| Run last command | `!!` |
-| Run command by number | `!42` |
-| Search history | `Ctrl` + `R` (then type) |
-| Clear history | `history -c` |
+| Action                | Method                   |
+| :-------------------- | :----------------------- |
+| View history          | `history`                |
+| Run last command      | `!!`                     |
+| Run command by number | `!42`                    |
+| Search history        | `Ctrl` + `R` (then type) |
+| Clear history         | `history -c`             |
 
 
 ==~/.bash_history==:
