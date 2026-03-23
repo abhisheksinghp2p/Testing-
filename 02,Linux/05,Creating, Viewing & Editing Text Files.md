@@ -150,17 +150,17 @@ vim filename.txt
 - Press Enter
 
 #### Vim Cheat Sheet 
-| Action | Keys |
-| :--- | :--- |
-| **Start typing** (Insert mode) | `i` |
-| **Stop typing** (Normal mode) | `Esc` |
-| **Save** | `:w` + `Enter` |
-| **Quit** | `:q` + `Enter` |
-| **Save and quit** | `:wq` + `Enter` |
-| **Quit without saving** | `:q!` + `Enter` |
-| **Delete line** | `dd` |
-| **Undo** | `u` |
-| **Search** | `/word` + `Enter` |
+| Action                         | Keys              |
+| :----------------------------- | :---------------- |
+| **Start typing** (Insert mode) | `i`               |
+| **Stop typing** (Normal mode)  | `Esc`             |
+| **Save**                       | `:w` + `Enter`    |
+| **Quit**                       | `:q` + `Enter`    |
+| **Save and quit**              | `:wq` + `Enter`   |
+| **Quit without saving**        | `:q!` + `Enter`   |
+| **Delete line**                | `dd`              |
+| **Undo**                       | `u`               |
+| **Search**                     | `/word` + `Enter` |
 
 ## Create File Without Editor
 Create File Without Editor
