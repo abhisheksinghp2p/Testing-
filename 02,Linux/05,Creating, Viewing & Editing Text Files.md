@@ -19,22 +19,47 @@ stderr	                   Standard Error	                 2	                    
 
 ### Save Output to a File 
 
-#### Create New File or Overwrite (>)
+#### Create New File or #Overwrite (>)
+
+- Redirects output to a file by replacing its existing contents
+- If the file doesn’t exist → it gets created
+- If it exists → everything inside is deleted first
+
+**Example:**
+```bash
+echo "Hello" > file.txt
+```
+**file.txt** will contain only:
+```
+Hello
+```
+**Warning: Using > will delete old content!**
+
+
 ```bash
 ls > myfiles.txt
 ```
 This saves the file list into myfiles.txt
 
 
-```bash
-echo "Hello" > greeting.txt
+
+#### Add to Existing File / #Append (>>)
+
+- Redirects output to a file by adding to the end
+- If the file doesn’t exist → it gets created
+- If it exists → new content is added after existing content
+
+**Example:**
+```
+echo "World" >> file.txt
 ```
 
-This creates a file with "Hello" inside.
-**Warning: Using > will delete old content!**
+**file.txt becomes:**
+```
+Hello
+World
+```
 
-
-#### Add to Existing File (>>)
 ```bash
 echo "Line 1" > notes.txt       # Creates file
 echo "Line 2" >> notes.txt      # Adds to file
