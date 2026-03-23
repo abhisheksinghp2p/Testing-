@@ -187,7 +187,7 @@ EOF
 - sed/awk: Edit text in one command (non-interactive)
 
 
-### awk (Pattern Scanning & Processing)
+### #awk (Pattern Scanning & Processing)
 AWK is mainly used to extract and process columns (fields) from text.
 
 ==awk is a tool to work with columns in text files.==
@@ -245,7 +245,7 @@ awk '$3 > 1000 {print $1, $3}' /etc/passwd
 - print username + UID
 
 
-### sed (Stream Editor) (search/replace + line editing)
+### #sed (Stream Editor) (search/replace + line editing)
 
 **Purpose:** Find/replace + delete/insert for text streams
 
@@ -288,7 +288,7 @@ sed 's/http/https/g' urls.txt
 ---
 
 # Change the Shell Environment
-## Environment Variables
+## Environment Variables #env
 Variables are like containers that store information.
 
 The system uses variables to remember things like:
@@ -326,7 +326,7 @@ echo $MYNAME
 
 output:ak
 
-## The PATH Variable
+## The PATH Variable 
 PATH tells the system where to look for commands.
 
 ```
@@ -349,7 +349,7 @@ Now system will also look in /home/john/scripts for commands.
 
 
 
-## Aliases - Create Shortcuts
+## #Aliases - Create Shortcuts
 Tired of typing long commands? Create shortcuts!
 
 **Create alias:**
@@ -375,7 +375,7 @@ unalias ll
 ```
 
 
-## Make Changes Permanent
+## Make Changes Permanent #bashrc
 Changes disappear when you close terminal!
 
 To keep them forever, add to ~/.bashrc:
