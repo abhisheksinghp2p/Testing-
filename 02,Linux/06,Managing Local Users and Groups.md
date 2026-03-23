@@ -40,11 +40,11 @@ Groups help manage permissions for multiple users at once.
 
 ## Important Files
 
-| File | What it stores |
-|------|----------------|
+| File        | What it stores           |
+| ----------- | ------------------------ |
 | /etc/passwd | User account information |
-| /etc/shadow | Encrypted passwords |
-| /etc/group | Group information |
+| /etc/shadow | Encrypted passwords      |
+| /etc/group  | Group information        |
 
 ### Understanding /etc/passwd
 ```
