@@ -17,7 +17,8 @@ stderr	                   Standard Error	                 2	                    
 
 
 
-### Save Output to a File
+### Save Output to a File 
+
 #### Create New File or Overwrite (>)
 ```bash
 ls > myfiles.txt
