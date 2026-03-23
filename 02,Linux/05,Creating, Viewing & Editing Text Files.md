@@ -69,7 +69,7 @@ echo "Line 3" >> notes.txt      # Adds more
 Now notes.txt has 3 lines.
 
 
-## Pipe ( | ) - Connect Commands
+## #Pipe( | ) - Connect Commands
 
 Send output of one command to another command.
 ```bash
