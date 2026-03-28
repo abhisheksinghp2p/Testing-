@@ -119,13 +119,13 @@ cd ../..    # Go up two directories
 
 #### System Information Commands
 
-| Command               | Purpose            | VAPT Use                  |
-| :-------------------- | :----------------- | :------------------------ |
-| `whoami`              | Current username   | Identify compromised user |
-| `id`                  | User and group IDs | Check privileges          |
-| `hostname`            | System name        | Identify target           |
-| `uname -a`            | Kernel info        | Find kernel exploits      |
-| `cat /etc/os-release` | OS version         | Identify target OS        |
+| Command               | Purpose            |
+| :-------------------- | :----------------- |
+| `whoami`              | Current username   |
+| `id`                  | User and group IDs |
+| `hostname`            | System name        |
+| `uname -a`            | Kernel info        |
+| `cat /etc/os-release` | OS version         |
 
 #### User Information Commands
 
