@@ -192,7 +192,9 @@ sensitive information like passwords, commands, and accessed files.
 ### Running Multiple Commands
 #### Sequential Execution (;)
 
-Run commands one after another regardless of success:
+The semicolon (;) lets you execute commands in sequence, without stopping on errors.
+
+Run commands one after another regardless of whether the previous command succeeds or fails.
 ```
 cd /tmp; ls; pwd
 ```
