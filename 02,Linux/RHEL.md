@@ -14,12 +14,12 @@ status: in-progress
 
 ### 📅 Day 1: Setup & Linux Basics
 
-- [ ] Install RHEL 9 on VM (VirtualBox/KVM)
+- [x] Install RHEL 9 on VM (VirtualBox/KVM)
 - [ ] Register with developer subscription
-- [ ] Explore the desktop & terminal
+- [x] Explore the desktop & terminal
 - [ ] Practice: `ls`, `cd`, `pwd`, `mkdir`, `cp`, `mv`, `rm`, `touch`
 - [ ] Practice: `cat`, `less`, `head`, `tail`, `wc`, `grep`
-- [ ] Understand FHS — navigate every major directory
+- [x] Understand FHS — navigate every major directory
 - [ ] Practice: I/O redirection (`>`, `>>`, `|`, `2>`, `&>`, `tee`)
 - [ ] Practice: `find` and `locate` with various options
 - [ ] Read `man` pages for 5 commands
