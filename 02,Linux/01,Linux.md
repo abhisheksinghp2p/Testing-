@@ -268,8 +268,25 @@ Devices treated like files / Device files
 - /dev/null
 - /dev/tty
 
-## /mnt and /media
+### /mnt 
+- Used as a temporary mount point.
+- Admins often mount disks here manually.
+
+**Example:**
+```Bash
+mount /dev/sdb1 /mnt
+```
+
+### /media
 Where drives get mounted (USB, external disks)
+Used for removable media **Automatically**
+
+**Examples:**
+
+- USB drives
+- DVD/CD
+
+
 
 ## 9) /boot
 This contains files needed to start Linux.
@@ -283,7 +300,7 @@ This contains files needed to start Linux.
 Without this, **system booting is affected.**
 
 
-## /proc
+## 10) /proc
 Virtual filesystem showing running system info.
 It Does not store normal files like Document.
 
@@ -330,22 +347,6 @@ If you install Some extra Application manually, it may go here.
 ├── /var           # Variable data (logs, mail, etc.)
 ```
 
-
-### ==Configuration files (credentials, settings)==
-/etc/passwd         # User accounts
-/etc/shadow         # Password hashes
-/etc/sudoers        # Sudo privileges
-/etc/ssh/           # SSH configuration
-
-### ==Logs (information disclosure)==
-/var/log/auth.log   # Authentication logs
-/var/log/syslog     # System logs
-/var/log/apache2/   # Web server logs
-
-### ==Temporary (privilege escalation)==
-/tmp/               # World-writable
-/var/tmp/           # Persistent temp
-/dev/shm/           # Shared memory
 
 
 ### 4. Userspace

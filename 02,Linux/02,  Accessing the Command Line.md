@@ -1,6 +1,6 @@
 
 #  Command Line
-The command line (also called terminal, console, or shell) is a text-based interface to interact with the Linux operating system. Instead of clicking icons, you type commands.
+The command line (also called **terminal, console,** or **shell**) is a text-based interface to interact with the Linux operating system. Instead of clicking icons, you type commands.
 
 - Faster than GUI for repetitive tasks
 - Can be scripted and automated
