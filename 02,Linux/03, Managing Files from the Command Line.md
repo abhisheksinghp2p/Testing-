@@ -278,10 +278,70 @@ locate -i readme                # Case-insensitive
 locate -c "*.conf"              # Count matches
 updatedb                        # Update database (root required)
 ```
-# The which and whereis Commands
+#  `which` (Command path finder)
+Finds the path of executable commands
+- Searches in $PATH only
+- Works only for commands
+
+**example:**
+```
+which ls
+```
+
+**output:**
+```
+/bin/ls
+```
+
 ``` bash
 which python                    # Find command location
 which -a python                 # All locations in PATH
-whereis python                  # Binary, source, and man page locations
+
 type python                     # How shell interprets command
+```
+
+#  `whereis` (Quick binary/manuals + info)
+
+Finds binary, source, and manual pages
+- Faster than find
+- Not as deep as find
+**example:**
+```
+whereis ls
+```
+
+**output:**
+```
+ls: /bin/ls /usr/share/man/man1/ls.1.gz
+```
+
+```
+whereis python3
+```
+
+| Command   | Search Type      | Speed     | Accuracy  | Use Case          |
+| --------- | ---------------- | --------- | --------- | ----------------- |
+| `find`    | Real filesystem  | Slow      | Very high | Deep search       |
+| `locate`  | Database         | Fast      | Medium    | Quick search      |
+| `which`   | Executables only | Very fast | High      | Find command path |
+| `whereis` | Binary + docs    | Fast      | Medium    | Quick lookup      |
+
+# `grep` = Global Regular Expression Print
+
+**grep** = **search text inside files**
+==It searches for patterns (text) inside files or command output.==
+`grep` is one of the most powerful **text-search** tools in Linux—used everywhere from basic file searches to advanced cybersecurity analysis.
+
+**Basic Syntax:**
+```
+grep [options] pattern file
+```
+
+```
+grep "error" logfile.txt                        (Shows lines containing error)
+grep "error" file1.txt file2.txt                (Search in Multiple Files)
+grep -r "password" /etc                         (Searches all files inside /etc)  (Recursive Search)   
+ps aux | grep nginx                             (Finds running nginx processes)
+
+grep "Failed password" /var/log/auth.log        (Find failed logins)
 ```

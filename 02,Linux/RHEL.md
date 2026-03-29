@@ -18,10 +18,10 @@ status: in-progress
 - [ ] Register with developer subscription
 - [x] Explore the desktop & terminal
 - [x] Practice: `ls`, `cd`, `pwd`, `mkdir`, `cp`, `mv`, `rm`, `touch`
-- [ ] Practice: `cat`, `less`, `head`, `tail`, `wc`, `grep`
+- [x] Practice: `cat`, `less`, `head`, `tail`, `wc`, `grep`
 - [x] Understand FHS — navigate every major directory
 - [ ] Practice: I/O redirection (`>`, `>>`, `|`, `2>`, `&>`, `tee`)
-- [ ] Practice: `find` and `locate` with various options
+- [x] Practice: `find` and `locate` with various options
 - [ ] Read `man` pages for 5 commands
 
 > [!done] Day 1 Goal
