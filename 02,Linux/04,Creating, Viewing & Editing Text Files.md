@@ -14,6 +14,9 @@ ___
 stdout	                   Standard Output	             1	                                Normal output/results
 _________________________________________
 stderr	                   Standard Error	                 2	                                Error messages
+_________________________________________
+stdin                       Standard Input                   0                                 Input 
+
 
 ## 1. Standard Output #stdout - File Descriptor `1`
 
@@ -36,7 +39,7 @@ ls /fake/folder   # Error message "No such file" is stderr
 cat wrongfile.txt # Error goes to stderr
 ```
 
-## 3. Standard Input (stdin) - File Descriptor `0`
+## 3. Standard Input #stdin - File Descriptor `0`
 
 - What it is: Input TO a command (not output, but related)
 - Where it comes from: Your keyboard by default
