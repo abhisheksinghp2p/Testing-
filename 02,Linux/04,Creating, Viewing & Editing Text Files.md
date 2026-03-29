@@ -121,6 +121,7 @@ history | grep ssh              # Find ssh commands in history
 cat /etc/passwd | wc -l         # Count total lines
 ```
 
+
 ___ 
 
 # Edit Text Files from the Shell Prompt
