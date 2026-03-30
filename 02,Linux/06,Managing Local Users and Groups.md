@@ -331,6 +331,9 @@ sudo usermod -aG developers john
 sudo gpasswd -d john developers
 ```
 
+```
+sudo usermod -aG users ak
+```
 ### Delete Group
 ```
 sudo groupdel developers
