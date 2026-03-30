@@ -238,7 +238,14 @@ sudo usermod -G fgroup ak
 ```
 ==It will replace all existing supplementary groups and may remove sudo access.==
 
-
+Check Wheel group users
+```
+getent group sudo
+cat /etc/group | grep wheel
+or 
+groups <username>
+id <username>
+```
 #### Lock a User:
 **Locking:**
 The user cannot authenticate (log in) using their password.
