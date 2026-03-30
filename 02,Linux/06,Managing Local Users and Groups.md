@@ -326,7 +326,7 @@ sudo usermod -aG developers john
 
 ==Remember: Always use -aG (append) or user will be removed from other secondary groups!==
 
-### Remove User from Group
+# Remove User from Group `gpasswd`
 ```
 sudo gpasswd -d john developers
 ```
