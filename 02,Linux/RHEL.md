@@ -33,7 +33,7 @@ status: in-progress
 
 - [x] Study `/etc/passwd`, `/etc/shadow`, `/etc/group`
 - [x] Create 5 users with various options (`useradd`)
-- [ ] Create 3 groups, assign users to groups
+- [x] Create 3 groups, assign users to groups
 - [ ] Practice `passwd`, `chage`, `usermod`, `userdel`
 - [x] Understand permission bits (`rwx`, numeric)
 - [ ] Practice `chmod` (both numeric and symbolic)
