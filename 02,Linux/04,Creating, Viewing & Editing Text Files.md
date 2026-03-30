@@ -209,18 +209,18 @@ vim filename.txt
 ```
 
 **To type text:**
-- Press i (now you can type)
+- Press **`i`** (now you can type)
 - Type your text
 - Press Esc when done typing
   
 **To save and quit:**
 - Press Esc
-- Type :wq
+- Type **`:wq`**
 - Press Enter
   
 **To quit without saving:**
 - Press Esc
-- Type :q!
+- Type **`:q!`**
 - Press Enter
 
 #### Vim Cheat Sheet 
