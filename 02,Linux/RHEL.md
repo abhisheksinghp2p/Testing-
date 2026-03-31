@@ -36,7 +36,7 @@ status: in-progress
 - [x] Create 3 groups, assign users to groups
 - [ ] Practice `passwd`, `chage`, `usermod`, `userdel`
 - [x] Understand permission bits (`rwx`, numeric)
-- [ ] Practice `chmod` (both numeric and symbolic)
+- [x] Practice `chmod` (both numeric and symbolic)
 - [x] Practice `chown`, `chgrp`
 - [ ] Set up SUID, SGID, and Sticky bit — test each
 - [ ] Practice ACLs: `setfacl`, `getfacl`
