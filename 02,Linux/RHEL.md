@@ -34,14 +34,14 @@ status: in-progress
 - [x] Study `/etc/passwd`, `/etc/shadow`, `/etc/group`
 - [x] Create 5 users with various options (`useradd`)
 - [x] Create 3 groups, assign users to groups
-- [ ] Practice `passwd`, `chage`, `usermod`, `userdel`
+- [x] Practice `passwd`, `chage`, `usermod`, `userdel`
 - [x] Understand permission bits (`rwx`, numeric)
 - [x] Practice `chmod` (both numeric and symbolic)
 - [x] Practice `chown`, `chgrp`
-- [ ] Set up SUID, SGID, and Sticky bit — test each
+- [x] Set up SUID, SGID, and Sticky bit — test each
 - [ ] Practice ACLs: `setfacl`, `getfacl`
 - [x] Understand and modify `umask`
-- [ ] Lab: Create shared directory for a team with SGID
+- [x] Lab: Create shared directory for a team with SGID
 
 > [!done] Day 2 Goal
 > Can manage users/groups and set complex permissions confidently.

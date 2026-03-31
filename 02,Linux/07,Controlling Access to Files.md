@@ -347,7 +347,7 @@ chmod 4755 file
 Tip: SUID files are gold for privilege escalation!
 
 ### SGID (Set Group ID)
-On files: Runs as the file's group.
+On files: Runs as the file's group. / Runs with group permissions.
 
 **On directories:** New files inherit the directory's group.
 When SGID is set on a directory, any new file or folder created inside it will inherit the group of that directory, NOT the user’s default group.
@@ -361,8 +361,13 @@ See the s in group section? That's SGID.
 
 #### Set SGID:
 ```
+for directory
 chmod g+s directory
 chmod 2755 directory
+ 
+for file
+chmod g+s file.txt
+chmod 2755 file.txt
 ```
 
 ### Sticky Bit
