@@ -84,6 +84,11 @@ ps
  1250 pts/0    00:00:00 ps
 ```
 
+```
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root         1  0.0  0.1 169836 12456 ?        Ss   10:00   0:02 /usr/lib/systemd/systemd
+```
+
 **All processes (full format):**
 
 ```
