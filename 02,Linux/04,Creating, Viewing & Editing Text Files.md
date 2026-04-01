@@ -173,7 +173,7 @@ ___
 | **vim**  | Hard       | Advanced users |
 
 
-## Vim [[07.1 Vim,]]
+## Vim [[07.1 Vim - Software Management - SSH]]
 
 ## #Nano Text Editor
 
