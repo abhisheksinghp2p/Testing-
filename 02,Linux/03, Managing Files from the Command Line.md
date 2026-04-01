@@ -278,6 +278,8 @@ locate -i readme                # Case-insensitive
 locate -c "*.conf"              # Count matches
 updatedb                        # Update database (root required)
 ```
+
+
 #  `which` (Command path finder)
 Finds the path of executable commands
 - Searches in $PATH only
