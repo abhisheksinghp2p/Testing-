@@ -52,8 +52,8 @@ status: in-progress
 
 - [x] Master `vi`/`vim` — practice modes and commands
   - [x] Insert, Command, Visual, Ex modes
-  - [ ] `dd`, `yy`, `p`, `u`, `/`, `:wq`, `:q!`, `:%s/old/new/g`
-  - [ ] `set number`, cursor movement, copy/paste blocks
+  - [x] `dd`, `yy`, `p`, `u`, `/`, `:wq`, `:q!`, `:%s/old/new/g`
+  - [x] `set number`, cursor movement, copy/paste blocks
 - [x] Set up SSH key-based authentication between 2 VMs
 - [x] Configure `/etc/ssh/sshd_config` (disable root login)
 - [ ] Practice RPM commands (`rpm -qa`, `-qi`, `-ql`, `-qf`, `-V`)
