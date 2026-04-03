@@ -1,8 +1,3 @@
-
-
-
-
-
 # DHCP (Dynamic Host Configuration Protocol) 
 DHCP automatically assigns IP addresses and network configuration to devices.
 
