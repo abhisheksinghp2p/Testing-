@@ -94,7 +94,9 @@ root         1  0.0  0.1 169836 12456 ?        Ss   10:00   0:02 /usr/lib/system
 ```
 ps aux
 ```
-
+**Shows:**
+- all processes
+- CPU, memory usage
 
 ##### Find Specific Process
 ```
@@ -117,8 +119,12 @@ pstree
 ```
 top
 ```
+**Press:**
+- q → quit
+- k → kill process
+- M → sort by memory
 
-Output updates every 3 seconds:
+**Output updates every 3 seconds:**
 ```
 top - 10:30:00 up 5 days,  2:30,  2 users,  load average: 0.15, 0.10, 0.05
 Tasks: 150 total,   1 running, 149 sleeping,   0 stopped,   0 zombie
