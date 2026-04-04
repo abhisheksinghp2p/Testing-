@@ -148,24 +148,24 @@ DHCP Server (Router)
 │  WHAT HAPPENS:                                               │
 │  ┌──────────────────────────────────────────────────────────┐│
 │  │                                                          ││
-│  │  PC-A shouts → EVERYONE hears it                        ││
+│  │  PC-A shouts → EVERYONE hears it                         ││
 │  │                                                          ││
-│  │  Other PCs    : "Not for me" (ignore) ❌                ││
-│  │  Printer      : "Not for me" (ignore) ❌                ││
-│  │  DHCP Server  : "That's for ME!" ✅                     ││
+│  │  Other PCs    : "Not for me" (ignore) ❌                 ││
+│  │  Printer      : "Not for me" (ignore) ❌                 ││
+│  │  DHCP Server  : "That's for ME!" ✅                      ││
 │  │                                                          ││
 │  └──────────────────────────────────────────────────────────┘│
 │                                                              │
 │  DIAGRAM:                                                    │
 │                                                              │
-│  ┌──────┐                              ┌──────────────┐     │
-│  │ PC-A │                              │ DHCP Server  │     │
-│  │      │  ══════ DISCOVER ══════════► │              │     │
-│  │      │  Src: 0.0.0.0               │ 192.168.10.1 │     │
-│  │      │  Dst: 255.255.255.255       │              │     │
-│  │      │  "Any DHCP server here?"    │  "I heard    │     │
-│  └──────┘                              │   that!"     │     │
-│                                        └──────────────┘     │
+│  ┌──────┐                              ┌──────────────┐      │
+│  │ PC-A │                              │ DHCP Server  │      │
+│  │      │  ══════ DISCOVER ══════════► │              │      │
+│  │      │  Src: 0.0.0.0               │ 192.168.10.1 │       │
+│  │      │  Dst: 255.255.255.255       │              │       │
+│  │      │  "Any DHCP server here?"    │  "I heard    │       │
+│  └──────┘                              │   that!"     │      │
+│                                        └──────────────┘      │
 │                                                              │
 └──────────────────────────────────────────────────────────────┘
 ```
