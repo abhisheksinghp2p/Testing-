@@ -483,3 +483,9 @@ sudo systemctl stop ssh
 systemctl mask httpd        # Completely prevent from starting
 ```
 Completely blocks service (even manual start ❌)
+
+
+
+____
+
+# Journald (Logs)
