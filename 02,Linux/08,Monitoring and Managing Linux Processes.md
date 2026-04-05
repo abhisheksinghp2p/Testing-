@@ -484,8 +484,11 @@ systemctl mask httpd        # Completely prevent from starting
 ```
 Completely blocks service (even manual start ❌)
 
+**To remove this restriction:**
 
-
+```bash
+systemctl unmask httpd
+```
 ____
 
 # Journald (Logs)
@@ -523,5 +526,12 @@ Storage=persistent
 **Then:**
 ```
 systemctl restart systemd-journald
+```
+
+##### Journal Filters 
+```
+journalctl -u httpd
+journalctl --since "1 hour ago"
+journalctl -p err
 ```
 
