@@ -446,6 +446,11 @@ Systemd is the "manager" that controls services (programs that run in the backgr
 
 **Modern Linux uses ==systemctl==.**
 
+#### service
+**Example:**
+- web server (httpd)
+- ssh (sshd)
+
 ```bash
 systemctl start httpd       # Start Apache web server
 systemctl stop httpd        # Stop it
@@ -472,3 +477,9 @@ sudo systemctl start ssh
 ```
 sudo systemctl stop ssh
 ```
+
+**mask:**
+```
+systemctl mask httpd        # Completely prevent from starting
+```
+Completely blocks service (even manual start ❌)
