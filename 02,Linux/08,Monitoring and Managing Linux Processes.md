@@ -191,8 +191,6 @@ pgrep -l sshd        # Show name too
 pgrep -u root        # All root processes
 ```
 
-
-
 ----
 
 # Kill Processes
@@ -292,6 +290,9 @@ pkill -9 processname
 ```
 
 ___
+
+# Background Jobs (`&`, `jobs`, `fg`, `bg`, `nohup`)
+
 
 
 
