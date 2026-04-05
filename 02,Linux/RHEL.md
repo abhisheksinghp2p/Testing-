@@ -75,7 +75,7 @@ status: in-progress
 - [x] Master `systemctl` — start/stop/enable/disable/mask
 - [ ] Understand systemd targets, switch between them
 - [ ] Check and make `journald` persistent
-- [ ] Practice `journalctl` with filters
+- [x] Practice `journalctl` with filters
 - [ ] Create a custom systemd service unit file
 - [ ] Lab: Write a script, create a service for it, enable at boot
 
