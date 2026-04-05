@@ -1,4 +1,21 @@
 
+
+What is partition?
+= Dividing disk into parts
+
+What is filesystem?
+= Structure to store files
+
+What is mount?
+= Attach disk to directory
+
+What is fstab?
+= Permanent mount config
+
+What is LVM?
+= Flexible storage system
+
+
 # Linux Storage 
 
 ```
@@ -63,10 +80,17 @@ sdb1
 Create filesystem
 ==Without this → disk is unusable==
 
+| Filesystem | Use                                         |
+| ---------- | ------------------------------------------- |
+| **XFS**    | Default in RHEL, fast, good for large files |
+| **EXT4**   | Older, stable, widely used                  |
+
+
 ```
 mkfs.xfs /dev/sdb1
 ```
-
+**mkfs = Make File System**
+- Before using a disk, you must format it (like formatting a USB drive).
 **or**
 
 ```
@@ -109,6 +133,9 @@ nano /etc/fstab
 ```
 mount -a
 ```
+Mount everything listed in /etc/fstab
+
+_____________
 
 
 # LVM 
@@ -131,16 +158,37 @@ Disk → PV → VG → LV → Mount
 ```
 pvcreate /dev/sdb
 ```
+**PV = Physical Volume**
+
+**Means:**
+"Convert this disk into LVM usable disk"
 
 #### 2. Create VG
 ```
 vgcreate myvg /dev/sdb
 ```
+**VG = Volume Group**
+
+**Means:**
+"Create a storage pool using one or more disks"
+
+**Example:**
+- You have 1 disk → 10GB
+- VG = pool of 10GB
+
 
 #### 3. Create LV
 ```
 lvcreate -L 1G -n mylv myvg
 ```
+**LV = Logical Volume**
+
+**Means:**
+"Create a partition-like thing from VG"
+
+**Example:**
+- VG = 10GB
+- LV = 5GB (like a partition)
 
 #### 4. Format
 ```
