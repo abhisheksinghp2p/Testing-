@@ -489,3 +489,39 @@ Completely blocks service (even manual start ❌)
 ____
 
 # Journald (Logs)
+
+**System logging service**
+
+##### View logs
+```
+journalctl
+```
+
+##### Live logs
+```
+journalctl -f
+```
+
+##### Logs for service
+```
+journalctl -u httpd
+```
+
+### Make logs persistent
+
+**Edit:**
+```
+sudo nano /etc/systemd/journald.conf
+```
+
+**Change:**
+```
+Storage=persistent
+
+```
+
+**Then:**
+```
+systemctl restart systemd-journald
+```
+
