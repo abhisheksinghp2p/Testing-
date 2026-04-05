@@ -210,7 +210,7 @@ mount /dev/myvg/mylv /mnt/data
 lsblk          # view disks
 fdisk          # create partition
 mkfs.xfs       # create filesystem
-mount          # mount disk
+mount          # mount disk               
 df -h          # check usage
 free -h        # check memory/swap
 ```
