@@ -71,7 +71,7 @@ status: in-progress
 - [x] Practice `ps aux`, `ps -ef`, `top`, `pgrep`, `pkill`
 - [x] Run background jobs (`&`, `jobs`, `fg`, `bg`, `nohup`)
 - [x] Practice signals (`kill -9`, `kill -15`, `kill -1`)
-- [ ] Understand nice values; practice `nice` and `renice`
+- [x] Understand nice values; practice `nice` and `renice`
 - [x] Master `systemctl` — start/stop/enable/disable/mask
 - [ ] Understand systemd targets, switch between them
 - [ ] Check and make `journald` persistent
