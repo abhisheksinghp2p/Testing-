@@ -69,10 +69,10 @@ status: in-progress
 ### 📅 Day 4: Processes, Services & Systemd
 
 - [x] Practice `ps aux`, `ps -ef`, `top`, `pgrep`, `pkill`
-- [ ] Run background jobs (`&`, `jobs`, `fg`, `bg`, `nohup`)
-- [ ] Practice signals (`kill -9`, `kill -15`, `kill -1`)
+- [x] Run background jobs (`&`, `jobs`, `fg`, `bg`, `nohup`)
+- [x] Practice signals (`kill -9`, `kill -15`, `kill -1`)
 - [ ] Understand nice values; practice `nice` and `renice`
-- [ ] Master `systemctl` — start/stop/enable/disable/mask
+- [x] Master `systemctl` — start/stop/enable/disable/mask
 - [ ] Understand systemd targets, switch between them
 - [ ] Check and make `journald` persistent
 - [ ] Practice `journalctl` with filters
