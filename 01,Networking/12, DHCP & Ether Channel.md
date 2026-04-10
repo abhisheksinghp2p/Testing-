@@ -184,17 +184,17 @@ DHCP Server (Router)
 │  DIRECTION  : Server → Client                                │
 │                                                              │
 │  WHY BROADCAST?                                              │
-│  • Client STILL has no IP (can't receive unicast)           │
-│  • Client identifies its offer by Transaction ID            │
+│  • Client STILL has no IP (can't receive unicast)            │
+│  • Client identifies its offer by Transaction ID             │
 │                                                              │
 │  SERVER LOGIC:                                               │
 │  ┌──────────────────────────────────────────────────────────┐│
 │  │                                                          ││
-│  │  1. Server receives DISCOVER                            ││
-│  │  2. Server checks pool: "What IPs are available?"       ││
-│  │     → .1 to .9 = EXCLUDED (reserved)                    ││
+│  │  1. Server receives DISCOVER                             ││
+│  │  2. Server checks pool: "What IPs are available?"        ││
+│  │     → .1 to .9 = EXCLUDED (reserved)                     ││
 │  │     → .10 = AVAILABLE ✅ (first available)              ││
-│  │  3. Server picks 192.168.10.10                          ││
+│  │  3. Server picks 192.168.10.10                           ││
 │  │  4. Server RESERVES this IP temporarily                 ││
 │  │  5. Server sends OFFER with this IP                     ││
 │  │                                                          ││
@@ -339,7 +339,7 @@ DHCP Server (Router)
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
-│  STEP 4: ACK — "Confirmed! 192.168.10.10 is yours!"         │
+│  STEP 4: ACK — "Confirmed! 192.168.10.10 is yours!"          │
 ├──────────────────────────────────────────────────────────────┤
 │                                                              │
 │  WHO SENDS  : DHCP Server                                    │
@@ -349,51 +349,51 @@ DHCP Server (Router)
 │  SERVER DOES 2 THINGS:                                       │
 │  ┌──────────────────────────────────────────────────────────┐│
 │  │                                                          ││
-│  │  1. Creates BINDING record in database:                 ││
-│  │     MAC: AAAA.AAAA ↔ IP: 192.168.10.10                ││
-│  │     Lease: 24 hours                                     ││
+│  │  1. Creates BINDING record in database:                  ││
+│  │     MAC: AAAA.AAAA ↔ IP: 192.168.10.10                   ││
+│  │     Lease: 24 hours                                      ││
 │  │                                                          ││
-│  │  2. Sends ACK packet to confirm                         ││
+│  │  2. Sends ACK packet to confirm                          ││
 │  │                                                          ││
 │  └──────────────────────────────────────────────────────────┘│
 │                                                              │
 │  PACKET:                                                     │
 │  ┌──────────────────────────────────────────────────────────┐│
 │  │  LAYER 2:                                                ││
-│  │    Src MAC  : BBBB.BBBB          (server's MAC)         ││
-│  │    Dst MAC  : FFFF.FFFF          (broadcast)            ││
+│  │    Src MAC  : BBBB.BBBB          (server's MAC)          ││
+│  │    Dst MAC  : FFFF.FFFF          (broadcast)             ││
 │  │                                                          ││
 │  │  LAYER 3:                                                ││
-│  │    Src IP   : 192.168.10.1       (server's IP)          ││
-│  │    Dst IP   : 255.255.255.255    (broadcast)            ││
+│  │    Src IP   : 192.168.10.1       (server's IP)           ││
+│  │    Dst IP   : 255.255.255.255    (broadcast)             ││
 │  │                                                          ││
 │  │  LAYER 4:                                                ││
-│  │    Src Port : 67                 (server port)          ││
-│  │    Dst Port : 68                 (client port)          ││
+│  │    Src Port : 67                 (server port)           ││
+│  │    Dst Port : 68                 (client port)           ││
 │  │                                                          ││
 │  │  DHCP DATA:                                              ││
 │  │    Message Type    : ACK                                 ││
-│  │    Transaction ID  : 0x1234ABCD  (matches everything)   ││
-│  │    YIADDR          : 192.168.10.10 (Your IP confirmed)  ││
-│  │    Server ID       : 192.168.10.1                       ││
+│  │    Transaction ID  : 0x1234ABCD  (matches everything)    ││
+│  │    YIADDR          : 192.168.10.10 (Your IP confirmed)   ││
+│  │    Server ID       : 192.168.10.1                        ││
 │  │                                                          ││
 │  │  OPTIONS:                                                ││
-│  │    Subnet Mask     : 255.255.255.0                      ││
-│  │    Default Gateway : 192.168.10.1                       ││
-│  │    DNS Server      : 8.8.8.8                            ││
-│  │    Lease Time      : 86400 seconds (24 hours)           ││
+│  │    Subnet Mask     : 255.255.255.0                       ││
+│  │    Default Gateway : 192.168.10.1                        ││
+│  │    DNS Server      : 8.8.8.8                             ││
+│  │    Lease Time      : 86400 seconds (24 hours)            ││
 │  └──────────────────────────────────────────────────────────┘│
 │                                                              │
 │  DIAGRAM:                                                    │
 │                                                              │
-│  ┌──────┐                              ┌──────────────┐     │
-│  │ PC-A │                              │ DHCP Server  │     │
-│  │      │  ◄══════ ACK ═══════════════ │              │     │
-│  │      │  "CONFIRMED!"                │ 192.168.10.1 │     │
-│  │      │  ".10.10 is yours            │              │     │
-│  │      │   for 24 hours!"             │  Binding:    │     │
-│  │      │                              │  AAAA↔.10.10 │     │
-│  └──────┘                              └──────────────┘     │
+│  ┌──────┐                              ┌──────────────┐      │
+│  │ PC-A │                              │ DHCP Server  │      │
+│  │      │  ◄══════ ACK ═══════════════ │              │      │
+│  │      │  "CONFIRMED!"                │ 192.168.10.1 │      │
+│  │      │  ".10.10 is yours            │              │      │
+│  │      │   for 24 hours!"             │  Binding:    │      │
+│  │      │                              │  AAAA↔.10.10 │      │
+│  └──────┘                              └──────────────┘      │
 │                                                              │
 │  RESULT — PC-A IS NOW CONFIGURED:                            │
 │  ┌──────────────────────────────────────────────────────────┐│
