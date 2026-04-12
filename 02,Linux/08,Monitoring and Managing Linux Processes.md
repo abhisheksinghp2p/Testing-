@@ -444,9 +444,52 @@ ____________
 
 Systemd is the "manager" that controls services (programs that run in the background).
 
-**Modern Linux uses ==systemctl==.**
+==systemd = system manager in RHEL==
 
-#### service
+**It controls:**
+- Boot process
+- Services (httpd, sshd, etc.)
+- Logs (journald)
+
+### systemd Targets
+
+Targets = system states (like modes)
+
+| Target              | Meaning                   |
+| ------------------- | ------------------------- |
+| `multi-user.target` | Normal CLI mode (no GUI)  |
+| `graphical.target`  | GUI mode                  |
+| `rescue.target`     | Single-user (repair mode) |
+| `poweroff.target`   | Shutdown                  |
+
+##### Check Current Target
+```
+systemctl get-default
+```
+Shows default boot mode
+
+
+### Switch Target
+##### Temporarily switch (no reboot)
+```
+sudo systemctl isolate multi-user.target
+```
+ Switch to CLI immediately
+
+```
+sudo systemctl isolate graphical.target
+```
+Switch to GUI
+
+##### Permanently set target
+```
+sudo systemctl set-default multi-user.target
+```
+Next boot → CLI mode
+
+
+**Modern Linux uses ==systemctl==.**
+### service
 **Example:**
 - web server (httpd)
 - ssh (sshd)
@@ -491,9 +534,20 @@ systemctl unmask httpd
 ```
 ____
 
-# Journald (Logs)
+# Journald (Logs system)
 
-**System logging service**
+- **`journald` stores system logs**
+- **System logging service**
+
+**Logs include:**
+
+- boot logs
+- service logs
+- errors
+
+**By default logs are:**
+==temporary (lost after reboot)==
+
 
 ##### View logs
 ```
@@ -510,7 +564,7 @@ journalctl -f
 journalctl -u httpd
 ```
 
-### Make logs persistent
+### Make logs persistent / Make journald Persistent
 
 **Edit:**
 ```
