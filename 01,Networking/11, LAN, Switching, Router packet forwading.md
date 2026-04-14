@@ -409,8 +409,15 @@ Store Next-hop MAC address and Layer 2 details needed to forward packets.
 
 
 - Contains Layer 2 information
-- Pre-computed MAC addresses
 
+> [!NOTE]
+> 
+> >**Routing table tells:**
+> “Where to send the packet (next IP)”
+> 
+>  >**Adjacency table tells:**
+> “How to send it (MAC address, interface)”
+> 
 
 ## Planes on Router / Traffic on Router 
 ![[Pasted image 20260129143417.png]]
