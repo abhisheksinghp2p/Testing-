@@ -499,8 +499,15 @@ DHCP Server (Router)
 ```
 
 
+
+__________________________________________
+
 # Ether Channel 
 Bundles multiple physical links into one logical link for increased bandwidth & redundancy
+
+Ether Channel combines multiple physical Ethernet links into one logical link to:
+- Increase bandwidth
+- Provide redundancy
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────┐
