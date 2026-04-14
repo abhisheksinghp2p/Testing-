@@ -62,7 +62,6 @@ Filters traffic based on Source IP, Destination IP, Port number, Protocol (TCP/U
 _________________
 
 
-
 # Port Security 
 - ==Port security is a feature used to restrict which devices can connect to a switch port using MAC address==
 - Port Security is a feature used on switches to control which devices are allowed to connect to a specific switch port. It helps prevent unauthorized access to a network.
@@ -95,3 +94,41 @@ When an unauthorized device connects, the switch can respond in different ways:
 **Port gets disabled**
 - Disables the port completely
 - Requires manual or automatic recovery
+
+
+
+## Types Of Port Security
+#### 1. Static MAC Addressing
+
+**What it is:**
+You manually configure which MAC addresses are allowed on a port.
+
+**How it works:**
+
+- The network admin enters specific MAC addresses into the switch config
+- Only those devices are allowed
+- Any other device → violation
+
+
+#### 2. Dynamic MAC Addressing
+
+**What it is:**
+The switch automatically learns MAC addresses of connected devices.
+
+**How it works:**
+
+- First device connects → switch learns its MAC
+- Stored in MAC address table (CAM table)
+- If device disconnects or switch reboots → MAC is forgotten
+
+
+#### 3. Sticky MAC Addressing
+
+**What it is:**
+A hybrid approach: automatically learns MAC addresses AND saves them in the configuration.
+
+**How it works:**
+
+- Device connects → MAC is learned automatically
+- Switch “sticks” it into running config
+- Can be saved permanently using write memory
