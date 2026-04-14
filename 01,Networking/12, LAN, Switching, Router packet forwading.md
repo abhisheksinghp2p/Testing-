@@ -396,7 +396,8 @@ Learned automatically from routing protocols like:
 
 
 ###### b) Adjacency Table
-Store Next-hop MAC address and Layer 2 details needed to forward packets.
+- Store Next-hop MAC address and Layer 2 details needed to forward packets.
+- MAC address of the next-hop device (not always the final destination)
 
 ```
 ┌──────────────┬───────────────────┬─────────────┐
@@ -416,7 +417,7 @@ Store Next-hop MAC address and Layer 2 details needed to forward packets.
 > “Where to send the packet (next IP)”
 > 
 >  >**Adjacency table tells:**
-> “How to send it (MAC address, interface)”
+> “How to send it (MAC address of next hop, interface)”
 > 
 
 ## Planes on Router / Traffic on Router 
