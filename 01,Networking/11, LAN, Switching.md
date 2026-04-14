@@ -232,8 +232,8 @@ Forward using cached info (fast)
 └─────────────────┴──────────────┴─────────────┴─────────────┘
 ```
 
-### RIB (Routing Information Base)
-What is RIB?
+### RIB (Routing Information Base)(Routing Table)
+**What is RIB?**
 
 - Also called Routing Table
 - Lives in Control Plane( in CPU )
