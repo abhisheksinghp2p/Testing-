@@ -28,6 +28,14 @@ Example:
 /dev/sdb → /dev/sdb1 → xfs → /mnt/data → files stored
 ```
 
+```
+Physical Disks → Partitions → Filesystem → Mount Point
+   /dev/sdb   →  /dev/sdb1  →   ext4     →  /mnt/data
+
+With LVM (adds flexibility):
+Physical Disks → PV → VG → LV → Filesystem → Mount Point
+   /dev/sdb   →  PV → VG → LV →    xfs     →  /mnt/data
+```
 ## Disk
 
 👉 A disk = storage device
