@@ -36,9 +36,7 @@ With LVM (adds flexibility):
 Physical Disks → PV → VG → LV → Filesystem → Mount Point
    /dev/sdb   →  PV → VG → LV →    xfs     →  /mnt/data
 ```
-## Disk
-
-👉 A disk = storage device
+## Disk  = storage device
 
 **Examples:**
 - /dev/sda → main disk
@@ -49,11 +47,9 @@ Physical Disks → PV → VG → LV → Filesystem → Mount Point
 lsblk
 ```
 
-## Partition
-A partition = a slice of disk
+## Partition = a slice of disk
 
-**Think:**
-One disk → divided into parts
+**One disk → divided into parts**
 
 **Example:**
 - /dev/sdb1
@@ -85,6 +81,7 @@ sdb1
 
 
 # Filesystem
+
 Create filesystem
 ==Without this → disk is unusable==
 
@@ -99,6 +96,7 @@ mkfs.xfs /dev/sdb1
 ```
 **mkfs = Make File System**
 - Before using a disk, you must format it (like formatting a USB drive).
+
 **or**
 
 ```
@@ -121,7 +119,7 @@ cd /mnt/data
 touch file.txt
 ```
 
-### Persistent Mount (/etc/fstab)
+### Persistent Mount ==(/etc/fstab)==
 
 Manual mount disappears after reboot ❌
 
