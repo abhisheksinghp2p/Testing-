@@ -216,7 +216,7 @@ w to save
 
 
 
-## Part 2: GPT Partitions
+## Part 2: GPT Partitions on nvme or sda
 
 
 - It is the modern way to manage disk partitions.
@@ -241,12 +241,61 @@ GPT Layout:
 ```
 
 
+####  Where is GPT stored?
+Unlike MBR (only at start):
+
+**GPT stores:**
+
+- Primary table at beginning
+- Backup table at end
+```
+[ Primary GPT | Partitions | Backup GPT ]
+```
 
 
+```
+fdisk /dev/nvme0n3
+```
 
+```
+Command: g                    ← Create GPT table (not 'o' for MBR!)
+# Created a new GPT disklabel
 
+Command: p
+# Disklabel type: gpt         ← Confirmed GPT
 
+# Create partition 1 (500MB)
+Command: n
+Partition number: 1 [Enter]
+First sector: [Enter]
+Last sector: +500M
+# Note: fdisk may ask "Remove ext4 signature?" → Yes
 
+# Create partition 2 (remaining, for LVM)
+Command: n
+Partition number: 2 [Enter]
+First sector: [Enter]
+Last sector: [Enter]           ← All remaining
+
+# Change partition 2 type to LVM
+Command: t
+Partition number: 2
+# In GPT mode, fdisk shows type list differently
+Partition type or alias: 30    ← Linux LVM
+# OR type: lvm                 ← Some versions accept alias
+
+# If unsure of type number:
+Command: l                     ← List all GPT types
+# Look for "Linux LVM" — note its number
+
+# Verify
+Command: p
+# Device           Start     End Sectors  Size Type
+# /dev/nvme0n3p1    2048 1026047 1024000  500M Linux filesystem
+# /dev/nvme0n3p2 1026048 2097118 1071071  523M Linux LVM
+
+Command: w
+```
 
 
 
