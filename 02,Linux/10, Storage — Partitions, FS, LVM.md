@@ -323,6 +323,27 @@ blkid /dev/nvme0n2p1 /dev/nvme0n3p1
 ```
 
 
+## Practice 4: Mount Manually & Persist in fstab
+
+```
+# Create mount points
+mkdir -p /mnt/ext4data
+mkdir -p /mnt/xfsdata
+
+# Mount
+mount /dev/nvme0n2p1 /mnt/ext4data
+mount /dev/nvme0n3p1 /mnt/xfsdata
+
+# Test — write files
+echo "ext4 works!" > /mnt/ext4data/test.txt
+echo "xfs works!" > /mnt/xfsdata/test.txt
+
+# Verify
+df -hT | grep mnt
+# /dev/nvme0n2p1  ext4  380M  2.3M  354M   1% /mnt/ext4data
+# /dev/nvme0n3p1  xfs   495M   26M  470M   6% /mnt/xfsdata
+```
+
 # LVM 
 
 **LVM = flexible storage system**
