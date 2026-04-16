@@ -160,6 +160,73 @@ Mount everything listed in /etc/fstab
 
 _____________
 
+# Practice 1: MBR Partitions on nvme or sda
+
+
+```
+fdisk /dev/nvme0n2
+```
+
+```
+Command: o                    ← Create fresh MBR table
+# Created a new DOS (MBR) disklabel
+
+Command: p                    ← Verify - should be empty
+# Disklabel type: dos
+
+# Create partition 1 (400MB)
+Command: n
+Select: p                    ← Primary
+Partition number: 1
+First sector: [Enter]
+Last sector: +400M
+
+# Create partition 2 (300MB for swap)
+Command: n
+Select: p
+Partition number: 2
+First sector: [Enter]
+Last sector: +300M
+
+# Change partition 2 type to swap
+Command: t
+Partition number: 2
+Hex code: 82                 ← Linux Swap
+
+# Create partition 3 (remaining space, for LVM)
+Command: n
+Select: p
+Partition number: 3
+First sector: [Enter]
+Last sector: [Enter]          ← Use all remaining
+
+# Change partition 3 type to LVM
+Command: t
+Partition number: 3
+Hex code: 8e                 ← Linux LVM
+
+# Verify
+Command: p
+# Device         Boot   Start     End Sectors  Size Id Type
+# /dev/nvme0n2p1         2048  821247  819200  400M 83 Linux
+# /dev/nvme0n2p2       821248 1435647  614400  300M 82 Linux swap
+# /dev/nvme0n2p3      1435648 2097151  661504  323M 8e Linux LVM
+
+Command: w                   ← Write and exit
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # LVM 
 
