@@ -298,7 +298,29 @@ Command: w
 ```
 
 
+```
+partprobe /dev/nvme0n3
 
+lsblk /dev/nvme0n3
+# nvme0n3       259:6    0    1G  0 disk
+# ├─nvme0n3p1   259:x    0  500M  0 part
+# └─nvme0n3p2   259:x    0  523M  0 part
+```
+
+
+## Practice 3: Create Filesystems
+```
+# ext4 on nvme0n2p1
+mkfs.ext4 /dev/nvme0n2p1
+
+# XFS on nvme0n3p1
+mkfs.xfs /dev/nvme0n3p1
+
+# Verify
+blkid /dev/nvme0n2p1 /dev/nvme0n3p1
+# /dev/nvme0n2p1: UUID="aaaa-bbbb-..." TYPE="ext4"
+# /dev/nvme0n3p1: UUID="cccc-dddd-..." TYPE="xfs"
+```
 
 
 # LVM 
