@@ -38,15 +38,6 @@ Groups help manage permissions for multiple users at once.
 - Secondary groups: developers, wheel
 
 
-## Important Files
-
-| File        | What it stores           |
-| ----------- | ------------------------ |
-| /etc/passwd | User account information |
-| /etc/shadow | Encrypted passwords      |
-| /etc/group  | Group information        |
-
-
 ---
 
 # Gain Superuser Access
