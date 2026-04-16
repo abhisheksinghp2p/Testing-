@@ -313,8 +313,8 @@ lsblk /dev/nvme0n3
 # ext4 on nvme0n2p1
 mkfs.ext4 /dev/nvme0n2p1
 
-# XFS on nvme0n3p1
-mkfs.xfs /dev/nvme0n3p1
+# XFS on nvme0n3p2
+mkfs.xfs /dev/nvme0n3p2
 
 # Verify
 blkid /dev/nvme0n2p1 /dev/nvme0n3p1
