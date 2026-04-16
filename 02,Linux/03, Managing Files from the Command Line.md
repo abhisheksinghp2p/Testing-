@@ -486,8 +486,6 @@ which ls
 ``` bash
 which python                    # Find command location
 which -a python                 # All locations in PATH
-
-type python                     # How shell interprets command
 ```
 
 #  `whereis` (Quick binary/manuals + info)
