@@ -327,6 +327,7 @@ echo "umask 077" >> ~/.bashrc
 
 
 ### SUID (Set User ID)
+==SUID is a special file permission in Linux that allows a user to execute a file with the permissions of the file owner instead of the user who runs it.==
 - When you run the file, it runs as the owner (not you).
 - When a user runs a file, it runs with owner’s permissions, not user’s.
 
