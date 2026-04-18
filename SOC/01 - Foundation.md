@@ -1,7 +1,7 @@
 # 1: Understanding L1 vs L2 vs L3 Responsibilities
 
 ## SOC (Security Operations Center)
-A SOC is a centralized team that monitors, detects, analyzes, and responds to cybersecurity threats 24/7.
+A SOC is a centralized team that monitors, detects, analyses, and responds to cybersecurity threats 24/7.
 
 Think of it like a security control room for an organization's IT infrastructure.
 
