@@ -1,4 +1,3 @@
-
 # Linux
 Linux is a **free and open-source operating system** based on Unix. It was created by **Linus Torvalds** in 1991.
 1. FREE      → You don't pay anything (Windows costs money)
@@ -178,14 +177,8 @@ Linux Distributions Family Tree
 
 **Package manager:**
 Debian/Ubuntu= apt (file extension .deb)
-RHEL = yum/dnf (file extension .dnf)
-## Hidden Files
+RHEL = rpm & yum/dnf (file extension .dnf)
 
-Files starting with . are hidden.
-Example:
-`.bashrc`
-`.ssh/`
 
-```bash
-ls -la
-```
+RHEL is a commercial Linux operating system developed by Red Hat, designed for enterprise environments such as servers, data centers, and cloud systems.
+## 
