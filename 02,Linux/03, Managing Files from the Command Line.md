@@ -533,7 +533,7 @@ whereis python3
 
 # `grep` = Global Regular Expression Print
 
-**grep** = **search text inside files**
+**grep** = **search text inside files and output**
 ==It searches for patterns (text) inside files or command output.==
 `grep` is one of the most powerful **text-search** tools in Linux—used everywhere from basic file searches to advanced cybersecurity analysis.
 
