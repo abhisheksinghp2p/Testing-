@@ -180,5 +180,11 @@ Debian/Ubuntu= apt (file extension .deb)
 RHEL = rpm & yum/dnf (file extension .dnf)
 
 
+
+## RHEL
 RHEL is a commercial Linux operating system developed by Red Hat, designed for enterprise environments such as servers, data centers, and cloud systems.
-## 
+
+- It is based on the Linux kernel
+- Provides stability, security, and long-term support
+- Used by companies for critical applications and infrastructure
+- Comes with paid support and regular updates
