@@ -265,6 +265,8 @@ awk '$3 > 1000 {print $1, $3}' /etc/passwd
 
 ### #sed (Stream Editor) (search/replace + line editing)
 
+`sed` is used to edit and transform text streams (line by line).
+
 **Purpose:** Find/replace + delete/insert for text streams
 
 ==sed is used to find and replace text.==
