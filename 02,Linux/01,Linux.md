@@ -6,6 +6,11 @@ Linux is a **free and open-source operating system** based on Unix. It was creat
 3. SECURE    → Very hard to hack compared to Windows
 4. STABLE    → Servers run for YEARS without restarting
 5. FAST      → Works great even on old computers
+
+#### UNIX
+- UNIX is an operating system (like Linux, Windows)
+- UNIX = a powerful, multi-user, multitasking operating system
+- It is **Closed source** and **paid OS**.
 ## Key Components of Linux
 
 ### The Linux Architecture
@@ -61,6 +66,7 @@ Linux is a **free and open-source operating system** based on Unix. It was creat
 └──────────────────────────────────────────────────────────┘
 
 ```
+
 ### 1. Kernel
 The Kernel is the CORE (heart) of the Operating System. It is the part that directly talks to your hardware.
 
