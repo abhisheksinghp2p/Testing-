@@ -1,8 +1,8 @@
 # Service/Daemon
 
 
-**Service=**       Program that runs in background
-**Daemon=**	Same thing! (Background service)
+
+**Daemon=**	==A daemon is a background process that runs continuously and performs tasks without direct user interaction.==
 
 **Examples:**
 - sshd - SSH server (lets you connect remotely)
@@ -11,8 +11,10 @@
 - mysqld - MySQL database
 - crond - Run Scheduled tasks
 - firewalld - Firewall
-Note: Many daemon names end with d (for daemon).
+Note: ==Many daemon names end with d (for daemon).==
 
+**Service=**       Program that runs in background
+==A service is a managed instance of a daemon, controlled by the system.==
 
 #### Service vs Regular Process
 
