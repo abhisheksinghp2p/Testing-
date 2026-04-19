@@ -90,6 +90,7 @@ ___
 
 ## journald
 journald is the modern logging system from systemd.
+==journald is the systemd logging daemon that collects and stores system logs in binary format.==
 
 **Benefits:**
 - Structured data (not just text)
