@@ -32,7 +32,6 @@ The command line is a text-based interface to interact with the Linux operating 
 - Originally: physical keyboard + monitor
 - In Linux: refers to virtual consoles (e.g., accessed with Ctrl + Alt + F3)
 - Works without a graphical environment
-### Accessing the Command Line
 
 ### 1. Virtual Consoles (TTYs)
 - Also called **TTY terminals**
