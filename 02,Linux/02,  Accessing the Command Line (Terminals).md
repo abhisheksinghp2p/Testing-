@@ -253,3 +253,6 @@ ls | head -5                    # Show first 5 files only
 history | grep ssh              # Find ssh commands in history
 cat /etc/passwd | wc -l         # Count total lines
 ```
+
+
+
