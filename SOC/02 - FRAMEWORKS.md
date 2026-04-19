@@ -641,13 +641,13 @@ The delivered weapon exploits a vulnerability and executes.
  Trigger the vulnerability to run malicious code
 
 #### What Gets Exploited:
-| Vulnerability Type | Description | Example |
-| :--- | :--- | :--- |
-| **Software Vulnerability** | Bug in application | Log4Shell (CVE-2021-44228) |
-| **User Action** | Tricking user to execute | "Enable macros" button |
-| **Zero-Day** | Unknown vulnerability | Exploit before patch exists |
-| **Configuration Weakness** | Misconfiguration | Default passwords, open shares |
-| **Browser Exploit** | Vulnerability in web browser | Drive-by download |
+| Vulnerability Type         | Description                  | Example                        |
+| :------------------------- | :--------------------------- | :----------------------------- |
+| **Software Vulnerability** | Bug in application           | Log4Shell (CVE-2021-44228)     |
+| **User Action**            | Tricking user to execute     | "Enable macros" button         |
+| **Zero-Day**               | Unknown vulnerability        | Exploit before patch exists    |
+| **Configuration Weakness** | Misconfiguration             | Default passwords, open shares |
+| **Browser Exploit**        | Vulnerability in web browser | Drive-by download              |
 
 #### How to Defend Against Exploitation:
 1. Patch Management
@@ -810,14 +810,14 @@ Attacker achieves their final goal (data theft, ransomware, destruction).
 
 ## Cyber Kill Chain vs MITRE ATT&CK
 
-| Aspect | Cyber Kill Chain | MITRE ATT&CK |
-| :--- | :--- | :--- |
-| **Created** | 2011 (Lockheed Martin) | 2013 (MITRE) |
-| **Stages** | 7 linear stages | 14 tactics (not always linear) |
-| **Focus** | Perimeter-based attacks | Modern attacks (including insider, cloud) |
-| **Granularity** | High-level phases | Detailed techniques (190+) |
-| **Use Case** | Understand attack flow | Map specific TTPs |
-| **Limitation** | Assumes linear progression | Complex but comprehensive |
+| Aspect          | Cyber Kill Chain           | MITRE ATT&CK                              |
+| :-------------- | :------------------------- | :---------------------------------------- |
+| **Created**     | 2011 (Lockheed Martin)     | 2013 (MITRE)                              |
+| **Stages**      | 7 linear stages            | 14 tactics (not always linear)            |
+| **Focus**       | Perimeter-based attacks    | Modern attacks (including insider, cloud) |
+| **Granularity** | High-level phases          | Detailed techniques (190+)                |
+| **Use Case**    | Understand attack flow     | Map specific TTPs                         |
+| **Limitation**  | Assumes linear progression | Complex but comprehensive                 |
 
 ==Both are valid! Kill Chain is simpler, ATT&CK is more detailed.==
 
