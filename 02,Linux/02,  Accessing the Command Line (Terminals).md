@@ -54,6 +54,11 @@ You might log into one console as root and another as a normal user
 - /dev/tty1
 - /dev/tty2
 
+**Typically in Linux:**
+
+- 6 text consoles → **/dev/tty1** to **/dev/tty6**
+- 1 graphical console → usually **/dev/tty7** (or tty1 on modern systems)
+
 ### 2. Terminal Emulator (GUI Console)
 - A graphical application that behaves like a console
 - Runs inside a desktop environment like GNOME or KDE Plasma
@@ -103,12 +108,7 @@ When you connect using SSH, you’re using a PTY
 **Examples:**
 /dev/pts/0
 /dev/pts/1
-### 6. Remote Console
-Accessing a system from another machine over network
 
-**Common tools:**
-- OpenSSH
-- Telnet (less secure, mostly outdated)
 
 
 
