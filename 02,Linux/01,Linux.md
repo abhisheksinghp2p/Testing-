@@ -84,7 +84,8 @@ uname -a                    # All system info
 ```
 
 ### 2. Shell
-A shell is the program that lets you talk to the operating system using commands.
+- A shell is the program that lets you talk to the operating system using commands.
+- ==A shell is a program that acts as an interface between you (the user) and the operating system’s kernel.==
 
 **It’s basically a command interpreter:**
 ```bash
