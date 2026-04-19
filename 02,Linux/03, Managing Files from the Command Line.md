@@ -149,8 +149,9 @@ Cached files from applications
 
 
 ## 7) /tmp
-Temporary files (often cleared on reboot)/Often writable
-==every user can work in this directory==
+- /tmp is a directory used to store temporary files created by programs.
+- Temporary files (often cleared on reboot)/Often writable
+- ==every user can work in this directory==
 
 #### ==**/var/tmp**==
 - Temporary files
@@ -159,7 +160,8 @@ Temporary files (often cleared on reboot)/Often writable
 
 
 ## 8) /dev
-Devices treated like files / Device files
+- Contains device files—these represent hardware and virtual devices as files.
+- Devices treated like files / Device files
 
 **Examples:**
 - /dev/sda (disk)
@@ -199,8 +201,9 @@ Without this, **system booting is affected.**
 
 
 ## 10) /proc
-Virtual filesystem showing running system info.
-It Does not store normal files like Document.
+- /proc is a virtual filesystem that provides real-time information about the system and running processes.
+- Virtual filesystem showing running system info.
+- It Does not store normal files like Document.
 
 **It gives info about:-**
 - Running process
@@ -215,14 +218,27 @@ cat /proc/meminfo
 ```
 
 ## 11) /opt 
-Used for **optional** or **third party software**.
+- Used for **optional** or **third party software**.
+- /opt is used to store optional or third-party software packages that are not part of the default system.
+- If you install Some extra Application manually, it may go here.
 
-If you install Some extra Application manually, it may go here.
-
+**Examples:**
+- /opt/google/ → Google Chrome
+- /opt/lampp/ → XAMPP
 ## 12) /run
+`/run` is a directory that stores temporary runtime data created by the system while it is running.
+
 - Stores runtime info 
 - current running system data 
 
+**What it contains**
+- Process IDs (PID files)
+- System state info
+- Service runtime data
+
+**Examples:**
+- /run/sshd.pid → SSH service process ID
+- /run/systemd/ → system manager data
 
 
 
@@ -257,6 +273,7 @@ documents/report.txt      # From /home/john
 | `..`    | Parent directory    |
 | `~`     | Home directory      |
 | `~user` | Another user's home |
+
 # Specify Files by Name
 **File Naming Rules:**
 - Case-sensitive (File.txt ≠ file.txt)
