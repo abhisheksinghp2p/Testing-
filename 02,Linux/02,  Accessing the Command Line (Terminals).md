@@ -1,12 +1,8 @@
 
 #  Command Line
-The command line (also called **terminal or console**) is a text-based interface to interact with the Linux operating system. Instead of clicking icons, you type commands.
+The command line is a text-based interface to interact with the Linux operating system. Instead of clicking icons, you type commands.
 
-==A terminal is an application that gives you access to a text-based interface.==
 
-- It’s a program/window (like GNOME Terminal or Konsole)
-- It emulates old physical terminals
-- It lets you interact with the system via a shell
 
 ==The command line is the interface inside the terminal where you type commands.==
 - Shows a prompt ($, #)
@@ -20,6 +16,7 @@ The command line (also called **terminal or console**) is a text-based interface
 - Less resource intensive
 - Available on all Linux systems including servers
 
+##
 
 ## Accessing the Command Line
 
