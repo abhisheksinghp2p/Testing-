@@ -60,14 +60,14 @@ Mount point = Directory where file system is attached.
 
 Common mount points:
 
-| Mount Point | Purpose |
-| :--- | :--- |
-| `/` | Root file system |
-| `/boot` | Boot files |
-| `/home` | User home directories |
-| `/mnt` | Temporary mounts (manual) |
-| `/media` | Removable media (auto) |
-| `/tmp` | Temporary files |
+| Mount Point | Purpose                   |
+| :---------- | :------------------------ |
+| `/`         | Root file system          |
+| `/boot`     | Boot files                |
+| `/home`     | User home directories     |
+| `/mnt`      | Temporary mounts (manual) |
+| `/media`    | Removable media (auto)    |
+| `/tmp`      | Temporary files           |
 
 ## Mount a Device
 **Basic syntax:**
