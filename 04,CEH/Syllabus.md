@@ -1,17 +1,4 @@
 # CEH v13 AI - Complete Study Checklist
-
-## 📌 Pre-Course Preparation
-- [ ] Register for CEH v13 training program
-- [ ] Choose training delivery method (iLearn/iWeek/Master Class/In-Person)
-- [ ] Set up study environment and note-taking system
-- [ ] Review basic networking fundamentals
-- [ ] Install Obsidian and organize vault structure
-- [ ] Access CEH learning portal and materials
-- [ ] Test Cyber Range lab access
-- [ ] Download required software tools
-- [ ] Join CEH community forums
-- [ ] Set study schedule (12-week recommended plan)
-
 ---
 
 ## 📚 MODULE 01: Introduction to Ethical Hacking
@@ -30,13 +17,6 @@
 - [ ] Lab: Setting up hacking environment
 - [ ] Lab: Understanding security policies
 - [ ] Lab: Exploring ethical hacking tools
-
-### Notes & Review
-- [ ] Create module summary notes
-- [ ] Review key terms and definitions
-- [ ] Complete practice questions
-- [ ] Identify weak areas for review
-
 ---
 
 ## 📚 MODULE 02: Footprinting and Reconnaissance
