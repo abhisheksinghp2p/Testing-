@@ -841,3 +841,6 @@ SNMP is a protocol for managing and monitoring network devices.
 If you remember only one idea, remember this:
 
 **SNMP is the language that network monitoring tools use to talk to devices, collect health/performance data, and receive alerts when something changes.**
+
+
+
