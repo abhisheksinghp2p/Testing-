@@ -513,7 +513,6 @@ systemctl status ssh
 **Start:**
 ```
 sudo systemctl start ssh
-
 ```
 
 **Stop:**
