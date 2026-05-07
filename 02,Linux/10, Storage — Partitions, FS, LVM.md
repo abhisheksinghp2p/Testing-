@@ -409,13 +409,82 @@ Flow:
   Disk → PV → VG → LV → Filesystem → Mount
 ```
 
+### Create Partitions on Both Disks
+**For /dev/nvme0n2**
+
+**Run:**
+```
+fdisk /dev/nvme0n2
+```
+
+**Inside fdisk:**
+```
+n
+p
+1
+Enter
+Enter
+t
+8e
+w
+```
+
+Because NVMe devices use p before partition number, result becomes:
+
+```
+/dev/nvme0n2p1
+```
+
+
+**For /dev/nvme0n3**
+
+**Run:**
+```
+fdisk /dev/nvme0n3
+```
+
+**Inside:**
+```
+n
+p
+1
+Enter
+Enter
+t
+8e
+w
+```
+
+**Result:**
+```
+/dev/nvme0n3p1
+```
+
 
 ### Basic LVM Steps
+
+```
+pvcreate /dev/nvme0n2p1 /dev/nvme0n3p1
+```
+
+```
+vgcreate myvg /dev/nvme0n2p1 /dev/nvme0n3p1
+```
+
+```
+lvcreate -l 100%FREE -n mylv myvg
+```
+
 ##### 1. Create PV
 ```
 pvcreate /dev/sdb
 ```
 **PV = Physical Volume**
+
+**Verify:**
+```
+pvs 
+```
 
 **Means:**
 "Convert this disk into LVM usable disk"
@@ -425,6 +494,11 @@ pvcreate /dev/sdb
 vgcreate myvg /dev/sdb
 ```
 **VG = Volume Group**
+
+
+```
+vgs
+```
 
 **Means:**
 "Create a storage pool using one or more disks"
@@ -446,6 +520,11 @@ lvcreate -L 1G -n mylv myvg
 **Example:**
 - VG = 10GB
 - LV = 5GB (like a partition)
+
+```
+lvs
+```
+
 
 #### 4. Format
 ```
