@@ -91,7 +91,7 @@ status: in-progress
 - [x] Practice `gdisk` — create GPT partitions
 - [x] Create XFS and ext4 filesystems
 - [x] Mount manually and persist in `/etc/fstab`
-- [ ] Create and activate swap partition and swap file
+- [x] Create and activate swap partition and swap file
 - [x] LVM Deep Dive:
   - [x] Create PV → VG → LV
   - [x] Format and mount LV
