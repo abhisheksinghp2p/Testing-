@@ -177,7 +177,7 @@ Cached files from applications
 mount /dev/sdb1 /mnt
 ```
 
-### /media
+### /run/media
 Where drives get mounted (USB, external disks)
 Used for removable media **Automatically**
 
