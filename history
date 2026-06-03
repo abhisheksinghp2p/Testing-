@@ -1,0 +1,146 @@
+
+    
+   13  git clone https://github.com/aakashyadav-ak/cybersecurity.git
+   17  cd cybersecurity/
+   29  git remote -v
+   30* git remote set-url origin https://github.com/abhisheksinghp2p/cybersecurity.git[A
+   31  git remote -v
+   32  git branch
+   33  git push -u origin main
+   34  ls -la ~/.ssh
+   35  ssh-keygen -t ed25519 -C "abhisheksingh55121@gmail.com"
+   36  cat ~/.ssh/id_ed25519.pub
+   37  ssh -T git@github.com
+   38  git remote -v
+   39  git remote set-url origin git@github.com:abhisheksinghp2p/cybersecurity.git
+   40  git remote -v
+   41  git push -u origin main
+   42  git remote set-url origin git@github.com:abhisheksinghp2p/Testing-.git
+   43  git remote -v
+   44  git push -u origin main
+   45  git ls-remote origin
+   46  git fetch origin
+   47  git log --oneline origin/main -5
+   48  git pull origin main --allow-unrelated-histories
+   49  git push -u origin main --force
+   50  cd ~
+   51  ll 
+   52  cd cybersecurity/
+   53  ls -l
+   54  vi xyz
+   55  ls 
+   56  git push -u origin main --force
+   57  ll 
+   58  cd  01,Networking
+   59  ll
+   60  vi xyz.md
+   61  git pull xyz.md
+   62  git push -u origin main --force
+   63  git add xyz.md
+   64  git commit -m "Add xyz.md"
+   65  git push origin main
+   66  git config --global user.name "abhisheksinghp2p"
+   67  git config --global user.email "abhisheksingh55121@gmail.com"
+   68  git config --global --list
+   69  git status
+   70  git commit -m "Add xyz.md"
+   71  git push origin main
+   72  cd ..
+   73  ll -h
+   74  git commit -m "Add xyz.md"
+   75  git commit -m "Add xyz"
+   76  git config --global --list
+   77  git commit -m "Add xyz"
+   78  git push origin main
+   79  git add cybersecurity
+   80  cd ..
+   81  ll -h
+   82  git add cybersecurity/xyz
+   83  ll cybersecurity/
+   84  git add cybersecurity
+   85  git add xyz
+   86  cd cybersecurity/
+   87  git add xyz
+   88  git commit -m "Add xyz file"
+   89  git push origin main
+   90  ll 
+   91  rm -r xyz
+   92  cd 01,Networking/
+   93  ll 
+   94  rm -r xyz.md 
+   95  cd /
+   96  git push origin main
+   97  cd ~/cybersecurity
+   98  nano /root/git-auto-push.sh
+   99  vi  /root/git-auto-push.sh
+  100  chmod +x /root/git-auto-push.sh
+  101  /root/git-auto-push.sh
+  102  crontab -e
+  103  crontab -l
+  104  crontab -e
+  105  crontab -l
+  106  ll 
+  107  mkdir ravi
+  108  ll 
+  109  touch testing 
+  110  cat gxyx <becbscs>
+  111  cat testing <
+  112  cat testing ?
+  113  cat testing >
+  114  cat testing > xyz
+  115  ll 
+  116  ls > xc
+  117  ls
+  118  cat xc
+  119  cd 01,Networking/
+  120  cd .
+  121  cd ..
+  122  cat 01,Networking/ > yyy
+  123  ll -h
+  124  cat .gitignore > yyy
+  125  cat yyy 
+  126  ll 
+  127  cat xyz 
+  128  cat xc
+  129  cat yyy > xc
+  130  cat xc
+  131  cat cx
+  132  cat xc
+  133  ls > yyy
+  134  cat yyy
+  135  cat xc
+  136  cat yyy >> xc 
+  137  cat xc
+  138  cat hjk 
+  139  cat hjk 2> xc 
+  140  cat xc
+  141  ll 
+  142  cat xc 
+  143  cat vbn
+  144  cat Abhisheksingh 2> xc 
+  145  cat x
+  146  cat xc 
+  147  ll 
+  148  rm -rvf yyy xyz testing xc 
+  149  ll 
+  150  rm -rvf ravi/
+  151  rmdir -rvf ravi/
+  152  rmdir -vf ravi/
+  153  rmdir -f ravi/
+  154  rmdir  ravi/
+  155  ll 
+  156  ls -la
+  157  ls -la /etc/passwd
+  158  ls -la /etc/shadow
+  159  ls -la /usr/bin/passwd 
+  160  top
+  161  free -h
+  162  crone -e
+  163  cron -e
+  164  cronetab -e
+  165  crontab -e
+  166  crontab -l
+  167  free -h
+  168  top 
+  169  history
+  170  history > history
