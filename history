@@ -1,7 +1,31 @@
-
-    
+    1  logout
+    2  passwd root
+    3  su - darinda
+    4  logout
+    5  shutdown
+    6  init 0
+    7  power off
+    8  power of
+    9  git clone https://github.com/abhisheksinghp2p/Testing-.git
+   10  git clone https://github.com/MatthewCaseres/AWS-Notes/blob/main/notes.md
+   11  git clone https://github.com/aakashyadav-ak/cybersecurity/blob/main/02%2CLinux/Commands.md
+   12  git clone https://github.com/aakashyadav-ak/cybersecurity/blob/main/02%2CLinux
    13  git clone https://github.com/aakashyadav-ak/cybersecurity.git
+   14  find https://github.com/aakashyadav-ak/cybersecurity.git
+   15  find cybersecurity
+   16  ls 
    17  cd cybersecurity/
+   18  ll -h
+   19  cd 01,Networking/
+   20  ll -h
+   21  cat 01. Networking Basic.md
+   22  cd ..
+   23  ll -h
+   24  git pull origin cybersecurity
+   25  cd cybersecurity/
+   26  ll 
+   27  git pull origin Testing-
+   28  git pull origin Testing
    29  git remote -v
    30* git remote set-url origin https://github.com/abhisheksinghp2p/cybersecurity.git[A
    31  git remote -v
@@ -144,3 +168,17 @@
   168  top 
   169  history
   170  history > history
+  171  ll 
+  172  vi history 
+  173  ll 
+  174  wget https://arena.ai/agent/019e8fbf-8e73-7108-8e38-ac585c1c9cf0
+  175  ll 
+  176  cat 019e8fbf-8e73-7108-8e38-ac585c1c9cf0 
+  177  wget http://192.168.80.11:8000/Github_setup
+  178  ip a
+  179  wget http://192.168.80.11:8000/Github_setup.md
+  180  ll 
+  181  rm history 
+  182  ll 
+  183  cd 019e8fbf-8e73-7108-8e38-ac585c1c9cf0 
+  184  history > history
