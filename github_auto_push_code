@@ -1,0 +1,12 @@
+#!/bin/bash
+
+cd /root/cybersecurity || exit
+
+# add all changes
+git add .
+
+# commit only if there are changes
+git diff --cached --quiet || git commit -m "Auto sync $(date '+%Y-%m-%d %H:%M:%S')"
+
+# push to GitHub
+git push origin main
