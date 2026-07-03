@@ -12,6 +12,7 @@ echo "Uptime          : $(uptime -p)"
 echo
 echo "----------- CPU Information -----------"
 lscpu | grep "Model name"
+top | head -5
 
 echo
 echo "----------- Memory Usage --------------"
@@ -24,6 +25,7 @@ df -h /
 echo
 echo "----------- IP Address ----------------"
 hostname -I
+hostnamectl | egrep "Kernel|Operating System|Static hostname"
 
 echo
 echo "----------- Logged-in Users -----------"
