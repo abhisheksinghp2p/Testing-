@@ -1,0 +1,385 @@
+Prometheus + Grafana + Node Exporter Monitoring Setup
+Architecture
+
+                 +----------------+
+                 |    Grafana     |
+                 |   Port: 3000   |
+                 +--------+-------+
+                          |
+                          |
+                 +--------v-------+
+                 |  Prometheus    |
+                 |   Port: 9090   |
+                 +--------+-------+
+                          |
+                          |
+              Scrapes Metrics (HTTP)
+                          |
+                 +--------v-------+
+                 | Node Exporter  |
+                 |   Port: 9100   |
+                 +----------------+
+                 | Linux Server   |
+                 +----------------+
+
+Part 1: Prepare Server
+1. Check OS
+cat /etc/os-release
+
+2. Update System
+dnf update -y
+
+3. Install Required Packages
+dnf install wget curl tar vim -y
+
+Part 2: Create Prometheus User and Directories
+1. Create Prometheus User
+useradd --no-create-home --shell /bin/false prometheus
+
+2. Create Prometheus Directories
+mkdir -p /opt/prometheus
+mkdir -p /opt/prometheus/data
+mkdir -p /opt/prometheus/config
+mkdir -p /opt/prometheus/rules
+
+mkdir -p /etc/prometheus
+mkdir -p /var/lib/prometheus
+
+Part 3: Install Prometheus Server
+1. Download Prometheus
+
+Go to temporary location:
+
+cd /tmp
+wget https://github.com/prometheus/prometheus/releases/download/v3.6.0/prometheus-3.6.0.linux-amd64.tar.gz
+
+2. Extract Package
+tar -xvf prometheus-3.6.0.linux-amd64.tar.gz
+
+Check files:
+
+ls prometheus-3.6.0.linux-amd64
+
+3. Copy Prometheus Binary
+cp prometheus-3.6.0.linux-amd64/prometheus /opt/prometheus/
+
+cp prometheus-3.6.0.linux-amd64/promtool /opt/prometheus/
+
+Copy console files:
+
+cp -r prometheus-3.6.0.linux-amd64/consoles /opt/prometheus/
+
+cp -r prometheus-3.6.0.linux-amd64/console_libraries /opt/prometheus/
+4. Copy Configuration
+cp prometheus-3.6.0.linux-amd64/prometheus.yml /etc/prometheus/
+5. Set Permission
+chown -R prometheus:prometheus /opt/prometheus
+
+chown -R prometheus:prometheus /etc/prometheus
+
+chown -R prometheus:prometheus /var/lib/prometheus
+
+Part 4: Configure Prometheus
+
+Edit configuration:
+
+vi /etc/prometheus/prometheus.yml
+
+Example configuration:
+
+global:
+  scrape_interval: 15s
+
+
+scrape_configs:
+
+  - job_name: "prometheus"
+
+    static_configs:
+      - targets:
+          - "localhost:9090"
+
+
+  - job_name: "linux-server"
+
+    static_configs:
+      - targets:
+          - "192.168.86.129:9100"
+
+Explanation:
+
+Parameter	Meaning
+scrape_interval	How often Prometheus collects data
+job_name	Monitoring target name
+targets	Agent IP and port
+
+Part 5: Create Prometheus Systemd Service
+
+Create file:
+
+vi /etc/systemd/system/prometheus.service
+
+Add:
+
+[Unit]
+Description=Prometheus Monitoring System
+After=network.target
+
+
+[Service]
+
+User=prometheus
+Group=prometheus
+
+Type=simple
+
+ExecStart=/opt/prometheus/prometheus \
+--config.file=/etc/prometheus/prometheus.yml \
+--storage.tsdb.path=/opt/prometheus/data
+
+
+[Install]
+
+WantedBy=multi-user.target
+
+
+Reload systemd:
+
+systemctl daemon-reload
+
+Start Prometheus:
+
+systemctl enable --now prometheus
+
+Check:
+
+systemctl status prometheus
+
+Part 6: Validate Prometheus
+
+Check port:
+
+ss -tulpn | grep 9090
+
+Expected:
+
+LISTEN 0  9090
+
+Open browser:
+
+http://SERVER-IP:9090
+
+Check configuration:
+
+/opt/prometheus/promtool check config /etc/prometheus/prometheus.yml
+
+Expected:
+
+SUCCESS
+
+
+
+
+Part 7: Install Node Exporter Agent
+
+Node Exporter collects Linux OS metrics.
+
+Metrics:
+
+CPU
+Memory
+Disk
+Network
+Filesystem
+Load
+1. Create User
+useradd --no-create-home --shell /bin/false node_exporter
+
+
+2. Download Node Exporter
+cd /tmp
+wget https://github.com/prometheus/node_exporter/releases/download/v1.11.1/node_exporter-1.11.1.linux-amd64.tar.gz
+tar -xvf node_exporter-1.11.1.linux-amd64.tar.gz
+
+3. Copy Binary
+mkdir -p /opt/node_exporter
+
+cp node_exporter-1.11.1.linux-amd64/node_exporter /opt/node_exporter/
+
+Permission:
+
+chown -R node_exporter:node_exporter /opt/node_exporter
+
+Part 8: Configure Node Exporter Service
+
+Create:
+
+vi /etc/systemd/system/node_exporter.service
+
+Add:
+
+[Unit]
+
+Description=Node Exporter
+
+After=network.target
+
+
+
+[Service]
+
+User=node_exporter
+
+Group=node_exporter
+
+Type=simple
+
+ExecStart=/opt/node_exporter/node_exporter
+
+
+
+[Install]
+
+WantedBy=multi-user.target
+
+
+Start service:
+
+systemctl daemon-reload
+
+
+systemctl enable --now node_exporter
+
+Check:
+
+systemctl status node_exporter
+
+Test Node Exporter
+
+Run:
+
+curl http://localhost:9100/metrics
+
+Output:
+
+# HELP node_cpu_seconds_total
+# HELP node_memory_MemTotal_bytes
+
+Means agent working.
+
+Part 9: Configure Firewall
+
+Prometheus Server:
+
+firewall-cmd --permanent --add-port=9090/tcp
+
+Node Exporter Agent:
+
+firewall-cmd --permanent --add-port=9100/tcp
+
+Grafana:
+
+firewall-cmd --permanent --add-port=3000/tcp
+
+Reload:
+
+firewall-cmd --reload
+Part 10: Install Grafana
+
+Install:
+
+dnf install grafana -y
+
+Enable:
+
+systemctl enable --now grafana-server
+
+Check:
+
+systemctl status grafana-server
+
+Verify:
+
+ss -tulpn | grep 3000
+
+Access:
+
+http://SERVER-IP:3000
+
+Default login:
+
+Username: admin
+Password: admin
+
+
+Part 11: Add Prometheus Data Source in Grafana
+
+Grafana:
+
+Configuration
+      |
+      |
+Data Sources
+      |
+      |
+Add Data Source
+      |
+      |
+Prometheus
+
+URL:
+
+http://localhost:9090
+
+Click:
+
+Save & Test
+
+Expected:
+
+Data source is working
+
+
+Part 12: Import Linux Dashboard
+
+Grafana:
+
+Dashboard
+   |
+Import
+
+Use Dashboard ID:
+
+1860
+
+This gives:
+
+CPU Usage
+RAM Usage
+Disk Usage
+Network Traffic
+Load Average
+Filesystem
+Troubleshooting Commands
+Prometheus Logs
+journalctl -u prometheus -n 50 --no-pager
+Node Exporter Logs
+journalctl -u node_exporter -n 50 --no-pager
+Check Ports
+ss -tulpn | egrep '9090|9100|3000'
+Check Targets
+
+Prometheus UI:
+
+Status
+ |
+Targets
+
+Expected:
+
+prometheus       UP
+linux-server     UP
+
+
+
+#####DONE DONE DONE#########dd
